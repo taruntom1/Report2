@@ -1,7 +1,8 @@
-\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\documentclass[journal,10pt,twocolumn]{IEEEtran}
 
 % Packages
-\usepackage[utf-8]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -12,25 +13,30 @@
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
-% Document Properties
-\title{Your Project Title Here}
-\author{Author Name}
-\date{\today}
+\title{\vspace{-1cm}\textbf{Design of a LoRa-Based Vehicular Mesh Network for Cooperative Driver Assistance}}
+\author{
+6th Semester Project Report\\
+Department of Electronics and Communication Engineering\\[0.3cm]
+\textbf{Group No.: 34}\\[0.2cm]
+\begin{tabular}{c c}
+Sabith (B230088EC) & Tarun Tom (B230589EC)\\
+Vinayak Vinod (B231331EC) & Vishnu CS (B231334EC)
+\end{tabular}\\[0.3cm]
+\textit{Under the Guidance of}\\
+Dr. Raghu CV
+}
+\date{February 2026\vspace{0.5cm}}
 
 \begin{document}
 
-% Make the title
+\twocolumn[
+\begin{@twocolumnfalse}
 \maketitle
+\vspace{-0.5cm}
+\end{@twocolumnfalse}
+]
 
-% Abstract
-\begin{abstract}
-Write your abstract here. It should summarize the main points of your paper in 100-150 words.
-\end{abstract}
-
-% Keywords
-\begin{keywords}
-keyword1, keyword2, keyword3
-\end{keywords}
+\section{Introduction}
 
 % Include sections
 \input{sections/Introduction.tex}
