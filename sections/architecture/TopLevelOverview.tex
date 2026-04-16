@@ -1,5 +1,30 @@
 \subsection{Top-level Overview}
 
-% Provide a high-level architectural view of the system.
-% Describe major components and how they interact.
+The proposed LoRa-based V2V system follows a \textbf{three-layer architecture} that separates 
+application concerns, network intelligence, and radio/link execution.
 
+At a system level, the architecture is designed to support \textbf{distributed safety message dissemination} 
+among vehicles over constrained LoRa links, while preserving modularity and testability.
+
+\begin{itemize}
+    \item The \textbf{Application Layer} generates outbound vehicle messages (currently test messages) 
+    and consumes delivered inbound messages.
+    \item The \textbf{Network Layer} acts as the system's control core: it encapsulates application 
+    payloads with network metadata, decides whether packets should be delivered and/or forwarded, suppresses duplicates, and manages relay timing.
+    \item The \textbf{Link Layer} provides LoRa frame transmission/reception over SX1278 hardware 
+    (or equivalent backend), including packetization, radio task/state-machine execution, 
+    channel sensing (CAD), and optional ACK/retry behavior.
+\end{itemize}
+
+In operation, application payloads flow downward (Application $\rightarrow$ Network $\rightarrow$ Link) 
+for transmission, while received LoRa frames flow upward (Link $\rightarrow$ Network $\rightarrow$ Application).
+
+The Network Layer is explicitly decoupled from hardware via an abstract link interface 
+(\texttt{ILinkLayer}), enabling both real-radio and simulation-backed deployments.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth]{"assets/architecture/top_level.jpg"}
+    \caption{Three-layer architecture of the LoRa-based V2V system showing the Application, Network, and Link layers with their interactions, including peer nodes and the communication channel.}
+    \label{fig:system_architecture}
+\end{figure}
