@@ -1,5 +1,60 @@
-\subsection{Link Layer}
+\subsection{Link Layer Architecture}
 
-% Describe responsibilities of the link layer.
-% Include framing, MAC behavior, error detection, and medium access details.
+The link-layer architecture operationalized the communication semantics required by the upper stack while 
+preserving strict boundaries with routing and application logic. Its principal responsibility was to provide 
+a dependable single-hop delivery substrate over a constrained long-range channel, including frame construction, 
+channel access coordination, reception management, and controlled energy behavior. In this design, upper layers 
+submitted payloads and consumed delivery events through an asynchronous service interface, whereas all 
+radio-facing behavior remained encapsulated within the link layer. This separation ensured that forwarding 
+policy, topology reasoning, and service semantics could evolve independently of modem-specific constraints.
+
+The wire format was organized around a compact fixed-size header followed by a bounded payload region, 
+thereby ensuring deterministic parsing cost and explicit interoperability guarantees across nodes. Header 
+fields encoded source and destination identifiers, message classification, sequence numbering, control flags, 
+and payload length. The addressing model used node-local unicast identifiers and a dedicated broadcast 
+destination value for one-to-many dissemination. Sequence and flag metadata jointly supported reliability 
+signaling without imposing mandatory overhead on all traffic classes. A reserved message type was allocated 
+for acknowledgment control traffic, preventing ambiguity between reliability signaling and application-defined 
+data categories.
+
+Medium access control followed a listen-before-send strategy based on channel activity detection. Prior to 
+transmission, the transmitter assessed channel occupancy and deferred when LoRa activity was detected, 
+reducing collision probability under shared medium contention. When repeated busy indications occurred, 
+bounded retry behavior with randomized backoff was applied to decorrelate concurrent transmitters and limit 
+persistent synchronization effects. If the medium remained unavailable beyond the configured sensing budget, 
+the pending transmission was discarded to prevent unbounded latency growth and queue destabilization. 
+This policy favored predictable temporal behavior and spectrum discipline over aggressive persistence.
+
+The transmission workflow combined queued frame dispatch with optional per-frame reliability. Once admitted 
+for transmission, a frame underwent channel sensing and, when clear, was emitted over the radio interface. 
+For traffic that did not request reliability, completion ended at transmit confirmation. For reliability-enabled 
+traffic, the sender entered a bounded acknowledgment wait phase and validated incoming acknowledgments against 
+sequence and addressing context. Successful matches terminated the transaction with positive outcome signaling 
+to the upper layer. Timeout events triggered controlled retransmission attempts up to a configured maximum, 
+after which the frame was reported as undelivered. This selective reliability model allowed critical safety 
+messages to request stronger delivery assurance while preserving lower overhead for noncritical traffic.
+
+Inbound processing followed a strict filtering pipeline to protect upper-layer logic from malformed or 
+irrelevant traffic. Frames below the minimum valid length were rejected immediately. Valid frames were parsed, 
+and link-quality observations were recorded for neighbor awareness. Destination filtering then removed packets 
+not addressed to the local node or broadcast group. Pure acknowledgment frames were consumed internally by the 
+reliability subsystem and not exposed as application payload events. When a received data frame requested 
+acknowledgment, a corresponding acknowledgment response was generated at link level. Only after these checks 
+were satisfied was payload data delivered upward, ensuring that upper layers observed semantically meaningful 
+and policy-compliant traffic.
+
+Energy management was integrated into runtime behavior through adaptive receive-idle control. 
+The receiver remained active to preserve responsiveness but transitioned to a low-power modem state 
+after sustained inactivity. Wake-up was event-driven: outbound traffic demand or relevant radio interrupt 
+activity restored active operation and resumed normal processing. This approach balanced readiness and battery 
+efficiency, a necessary trade-off for vehicular platforms that must sustain long operating intervals without 
+sacrificing timely communication when events occur.
+
+Hardware abstraction was achieved through a backend interface that isolated protocol and state logic from 
+concrete transceiver drivers. The link layer relied on this contract for channel sensing, transmission, 
+reception, signal-quality observation, interrupt signaling, and power-state transitions. As a consequence, 
+the same link-layer behavior could execute against production radio hardware or controlled test backends 
+without architectural change. This design improved portability, enabled deterministic validation under 
+laboratory conditions, and reduced coupling between communication policy and platform-specific implementation 
+details.
 
