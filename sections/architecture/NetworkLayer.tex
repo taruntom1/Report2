@@ -33,6 +33,13 @@ a bounded event queue and then processed by worker execution contexts that perfo
 local delivery, and conditional relay scheduling. This decoupled architecture prevented receive callbacks from 
 becoming policy execution bottlenecks and improved temporal predictability under bursty traffic.
 
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.95\textwidth]{assets/architecture/Network_layer_seq.png}
+\caption{Receive-path sequence of network-layer processing, from link-layer callback ingestion and queueing to routing evaluation, local delivery, and deferred forwarding.}
+\label{fig:network-layer-sequence}
+\end{figure*}
+
 Forwarding decisions were produced by an ordered evaluation pipeline that prioritized safety and bounded 
 propagation. Frames were first screened for temporal expiry, replay status, and residual hop budget, 
 followed by checks on distance-constrained dissemination and directional eligibility when directional 
@@ -42,6 +49,14 @@ estimate of path progress and link quality, and then modulated by traffic priori
 traffic propagated with lower latency while less critical traffic was naturally delayed. This mechanism 
 implemented contention-aware spatial diversity by encouraging favorable relays to transmit earlier and 
 discouraging simultaneous redundant rebroadcasts.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.6\textwidth]{assets/architecture/network_layer_decision.jpg}
+\caption{Network-layer decision pipeline for received frames, showing the ordered checks that 
+determine drop, deliver-only, or delayed forwarding outcomes.}
+\label{fig:network-layer-decision}
+\end{figure*}
 
 To further limit broadcast redundancy, the architecture incorporated two complementary suppression mechanisms. 
 First, duplicate filtering prevented repeated processing and forwarding of already observed message identities. 

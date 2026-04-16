@@ -25,6 +25,13 @@ persistent synchronization effects. If the medium remained unavailable beyond th
 the pending transmission was discarded to prevent unbounded latency growth and queue destabilization. 
 This policy favored predictable temporal behavior and spectrum discipline over aggressive persistence.
 
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.95\textwidth]{assets/architecture/link_layer_state_machine.png}
+\caption{Link-layer runtime state machine showing transitions among reception, channel activity detection, transmission wait, acknowledgment wait, sleep control, and idle handling.}
+\label{fig:link-layer-state-machine}
+\end{figure*}
+
 The transmission workflow combined queued frame dispatch with optional per-frame reliability. Once admitted 
 for transmission, a frame underwent channel sensing and, when clear, was emitted over the radio interface. 
 For traffic that did not request reliability, completion ended at transmit confirmation. For reliability-enabled 
@@ -32,7 +39,15 @@ traffic, the sender entered a bounded acknowledgment wait phase and validated in
 sequence and addressing context. Successful matches terminated the transaction with positive outcome signaling 
 to the upper layer. Timeout events triggered controlled retransmission attempts up to a configured maximum, 
 after which the frame was reported as undelivered. This selective reliability model allowed critical safety 
-messages to request stronger delivery assurance while preserving lower overhead for noncritical traffic.
+messages to request stronger delivery assurance while preserving lower overhead for noncritical traffic, as 
+illustrated in Fig.~\ref{fig:link-layer-sequence}.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.7\textwidth]{assets/architecture/link_layer_seq.png}
+\caption{Acknowledgment-enabled transmit sequence at the link layer, including CAD-based channel access, transmission completion handling, ACK validation, timeout detection, and bounded retransmission.}
+\label{fig:link-layer-sequence}
+\end{figure*}
 
 Inbound processing followed a strict filtering pipeline to protect upper-layer logic from malformed or 
 irrelevant traffic. Frames below the minimum valid length were rejected immediately. Valid frames were parsed, 
