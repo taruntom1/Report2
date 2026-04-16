@@ -1,30 +1,45 @@
 \subsection{Top-level Overview}
 
-The proposed LoRa-based V2V system follows a \textbf{three-layer architecture} that separates 
-application concerns, network intelligence, and radio/link execution.
+The proposed LoRa-based Vehicle-to-Vehicle system employs a \textbf{three-layer architecture} designed 
+to achieve clear separation of concerns across application functionality, network intelligence, and 
+radio transmission. This stratified design facilitates distributed safety message dissemination among 
+networked vehicles operating over constrained long-range wide-area network links while sustaining 
+both modularity and testability.
 
-At a system level, the architecture is designed to support \textbf{distributed safety message dissemination} 
-among vehicles over constrained LoRa links, while preserving modularity and testability.
+The \textbf{Application Layer} serves as the interface through which vehicle services originate and 
+consume network messages. This layer is responsible for generating outbound traffic destined for
+ neighboring vehicles and processing inbound messages delivered by the network substrate. The 
+ Application Layer remains independent of specific message routing policies or hardware characteristics, 
+ establishing a clean boundary for service-level logic.
 
-\begin{itemize}
-    \item The \textbf{Application Layer} generates outbound vehicle messages (currently test messages) 
-    and consumes delivered inbound messages.
-    \item The \textbf{Network Layer} acts as the system's control core: it encapsulates application 
-    payloads with network metadata, decides whether packets should be delivered and/or forwarded, suppresses duplicates, and manages relay timing.
-    \item The \textbf{Link Layer} provides LoRa frame transmission/reception over SX1278 hardware 
-    (or equivalent backend), including packetization, radio task/state-machine execution, 
-    channel sensing (CAD), and optional ACK/retry behavior.
-\end{itemize}
+The \textbf{Network Layer} functions as the control core of the system, responsible for managing message 
+delivery and forwarding decisions. This layer wraps application payloads with requisite network metadata 
+(such as hop counts, timestamps, and originator identifiers), evaluates whether received packets should 
+be delivered to the local node and/or forwarded to neighbors, suppresses duplicate transmissions to 
+conserve spectrum, and schedules relay timing to avoid contention and collision. By centralizing these 
+control policies, the Network Layer provides a unified point for deployment of adaptive forwarding strategies 
+and congestion management.
 
-In operation, application payloads flow downward (Application $\rightarrow$ Network $\rightarrow$ Link) 
-for transmission, while received LoRa frames flow upward (Link $\rightarrow$ Network $\rightarrow$ Application).
+The \textbf{Link Layer} abstracts the radio transmission boundary and provides the physical means for 
+frame transmission and reception over long-range wireless hardware. This layer manages packetization of 
+serialized messages, executes radio state transitions and channel sensing operations, and implements 
+optional mechanisms such as selective acknowledgment retry for reliability. By encapsulating hardware 
+specifics, the Link Layer enables the system to support multiple physical backends without requiring changes 
+to higher-layer logic.
 
-The Network Layer is explicitly decoupled from hardware via an abstract link interface 
-(\texttt{ILinkLayer}), enabling both real-radio and simulation-backed deployments.
+During standard operation, application payloads traverse the stack downward through successive layers 
+for transmission, while received radio frames traverse upward through the Link and Network layers before 
+delivery to the Application Layer. To enable both production deployments and simulation-driven testing, 
+the Network Layer maintains explicit hardware independence through a well-defined abstract interface with 
+the Link Layer. This abstraction permits the system to operate with either material radio devices or 
+software-based channel simulators, supporting thorough evaluation and validation in controlled laboratory 
+settings.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{"assets/architecture/top_level.jpg"}
-    \caption{Three-layer architecture of the LoRa-based V2V system showing the Application, Network, and Link layers with their interactions, including peer nodes and the communication channel.}
+    \caption{Three-layer architecture of the LoRa-based Vehicle-to-Vehicle system showing the Application, 
+    Network, and Link layers with data flow paths for message transmission and reception, together with 
+    peer vehicles and the wireless communication channel.}
     \label{fig:system_architecture}
 \end{figure}
