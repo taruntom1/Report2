@@ -1,7 +1,7 @@
 \documentclass[journal,12pt,twocolumn]{IEEEtran}
 
 % Packages
-\usepackage[utf-8]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -28,9 +28,9 @@ Write your abstract here. It should summarize the main points of your paper in 1
 \end{abstract}
 
 % Keywords
-\begin{keywords}
+\begin{IEEEkeywords}
 keyword1, keyword2, keyword3
-\end{keywords}
+\end{IEEEkeywords}
 
 % Include sections
 \input{sections/Introduction.tex}
@@ -40,15 +40,8 @@ keyword1, keyword2, keyword3
 \input{sections/WorkDone.tex}
 \input{sections/Results.tex}
 
-% References
-\begin{thebibliography}{99}
-
-\bibitem{ref1}
-Author Name,
-``Title of the Reference,''
-\textit{Journal or Conference Name},
-vol. X, no. Y, pp. XXX--XXX, Year.
-
-\end{thebibliography}
+% References (BibTeX)
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 
 \end{document}

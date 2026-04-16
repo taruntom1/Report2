@@ -1,6 +1,32 @@
 \section{Literature Review}
 
-% Write your literature review here
-% Survey existing work and discuss relevant publications
-% Identify gaps in current research
+\subsection{Introduction to LoRa in Vehicular Environments}
+
+Intelligent Transportation Systems (ITS) have traditionally relied on Dedicated Short-Range Communications (DSRC, IEEE 802.11p) and Cellular V2X (C-V2X) to facilitate Vehicle-to-Vehicle (V2V) and Vehicle-to-Infrastructure (V2I) communication. While these technologies offer high data rates and low latency, their operation at high frequencies (e.g., 5.9 GHz) severely limits their transmission range to typically under 300--500 meters and renders them highly vulnerable to Non-Line-of-Sight (NLOS) obstructions \cite{lorawan_v2roadside,lora_arch_v2x_move}.
+
+Consequently, Long Range (LoRa) technology, operating in the sub-GHz Industrial, Scientific, and Medical (ISM) bands, has emerged as an attractive alternative \cite{exp_study_lora_vehicle,urban_vanets_2023}. LoRa employs Chirp Spread Spectrum (CSS) modulation, which provides exceptional receiver sensitivity and robustness against multipath fading, enabling communication ranges of several kilometers even in harsh environments \cite{exp_study_lora_vehicle,lora_reliable_v2v_2025}. Crucially, while high vehicular speeds induce Doppler frequency shifts, contemporary studies indicate that practical LoRa links can remain stable under realistic mobility conditions, with packet-loss degradation being comparatively moderate at typical highway speeds and suitable radio parameter selections \cite{exp_study_lora_vehicle,lora_arch_v2x_move}.
+
+Despite these physical layer advantages, LoRa is fundamentally constrained by low data rates, strict duty-cycle regulations, and prolonged Time-on-Air (ToA), making traditional networking paradigms unsuitable for LoRa-based V2V safety applications without lightweight protocol design \cite{lora_mesh_iot,routing_mesh_2020}.
+
+\subsection{The Paradigm of Centralized vs. Decentralized V2V}
+
+A critical review of existing V2X literature reveals strong dependence on centralized, infrastructure-dependent architectures. Many contemporary proposals, whether utilizing 5G/LTE or LPWAN technologies like LoRaWAN, anchor their topology to Roadside Units (RSUs), cellular base stations, or centralized network servers \cite{lorawan_v2roadside,secure_iov}. Even solutions that introduce Device-to-Device (D2D) elements often still use RSUs or gateways for aggregation and control \cite{secure_iov,lora_arch_v2x_move}.
+
+This centralization introduces severe vulnerability for time-critical vehicular safety applications. In rural environments, mountainous terrain, or developing regions, dense deployment of RSUs or cellular towers is economically difficult. During natural disasters or outages, centralized systems may experience communication collapse, rendering cooperative assistance unavailable when needed most \cite{lora_mesh_emergency,lora_mesh_iot}.
+
+While prior work acknowledges these constraints, there remains limited practical research on fully independent, high-mobility LoRa mesh networking for V2V safety dissemination \cite{routing_mesh_2020,lora_reliable_v2v_2025}.
+
+\subsection{Evaluating Existing Network and Link Layer Protocols}
+
+At the link layer (MAC), standard LoRaWAN relies on pure ALOHA channel access, which leads to severe packet collisions and saturation under dense broadcast traffic \cite{lorawan_v2roadside,lora_mesh_iot}. Time-Division Multiple Access (TDMA) variants can reduce collisions but generally require clock synchronization and coordination that are difficult to maintain in infrastructure-free, ad-hoc vehicular settings \cite{routing_mesh_2020,lora_mesh_emergency}.
+
+At the network layer, attempts to directly port reactive ad-hoc routing protocols (e.g., AODV/DSR) to LoRa mesh systems face route-break and control-overhead issues in rapidly changing topologies \cite{routing_mesh_2020,vdtn_routing_eval}. Similarly, unrestricted flooding in delay-tolerant or epidemic forwarding strategies can create broadcast storms that quickly congest low-bandwidth LoRa channels \cite{vdtn_routing_eval,lora_mesh_iot}.
+
+The implemented codebase addresses these failure points by deliberately avoiding heavyweight LoRaWAN MAC behavior and traditional route-discovery overhead. Instead, it combines CAD-based channel sensing at the link layer with managed flooding, duplicate suppression, and hop-limited forwarding at the network layer to maintain low-overhead dissemination in dynamic mobility conditions \cite{lora_reliable_v2v_2025,lora_mesh_emergency}.
+
+\subsection{Research Gap and Proposed Architecture}
+
+The central research gap in the current state-of-the-art is the absence of a fully decentralized, mesh-based V2V protocol that simultaneously mitigates broadcast storms and MAC collisions without reliance on RSUs, fixed gateways, or centralized route-discovery control \cite{lora_reliable_v2v_2025,routing_mesh_2020}.
+
+The proposed 3-tier architecture addresses this gap through hardware-software co-design on ESP32-class platforms: deterministic safety messaging at the application layer, RSSI-aware managed flooding and duplicate filtering at the network layer, and CAD-driven collision avoidance at the link layer. Together, these choices form an autonomous and infrastructure-free vehicular mesh suitable for remote and disruption-prone environments \cite{lora_reliable_v2v_2025,lora_mesh_emergency,secure_iov}.
 
