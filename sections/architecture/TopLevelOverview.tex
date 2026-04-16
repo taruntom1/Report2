@@ -1,6 +1,6 @@
 \subsection{Top-level Overview}
 
-The proposed LoRa-based Vehicle-to-Vehicle system employs a \textbf{three-layer architecture} designed 
+The proposed LoRa-based V2V mesh system employs a \textbf{three-layer architecture} designed 
 to achieve clear separation of concerns across application functionality, network intelligence, and 
 radio transmission. This stratified design facilitates distributed safety message dissemination among 
 networked vehicles operating over constrained long-range wide-area network links while sustaining 
@@ -33,12 +33,12 @@ delivery to the Application Layer. To enable both production deployments and sim
 the Network Layer maintains explicit hardware independence through a well-defined abstract interface with 
 the Link Layer. This abstraction permits the system to operate with either material radio devices or 
 software-based channel simulators, supporting thorough evaluation and validation in controlled laboratory 
-settings. The overall layering and bidirectional data flow are illustrated in Figure~\ref{fig:system_architecture}.
+settings. The overall layering and bidirectional data flow are illustrated in Fig.~\ref{fig:system_architecture}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{"assets/architecture/top_level.jpg"}
-    \caption{Three-layer architecture of the LoRa-based Vehicle-to-Vehicle system showing the Application, 
+    \caption{Three-layer architecture of the LoRa-based V2V mesh system showing the Application, 
     Network, and Link layers with data flow paths for message transmission and reception, together with 
     peer vehicles and the wireless communication channel.}
     \label{fig:system_architecture}

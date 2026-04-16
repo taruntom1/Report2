@@ -7,7 +7,7 @@ domain and continue to be central to large-scale deployments and standardization
 Accordingly, this project does not position LoRa as a replacement for those systems on principle. Instead,
 the work is motivated by a practical engineering constraint in our final-year project setting: LoRa hardware
 was readily available to us, and it offered a significantly lower-cost platform for building and validating
-an end-to-end V2V communication prototype.
+an end-to-end LoRa-based V2V mesh system prototype.
 
 Within that constraint, the core technical question addressed in this report is whether a \textit{fully
 decentralized} vehicular mesh can provide useful safety-message dissemination without relying on roadside
@@ -17,13 +17,8 @@ disrupted \cite{lora_mesh_emergency,lora_mesh_iot}. The objective, therefore, is
 against infrastructure-backed systems, but to design and validate a robust distributed communication approach
 that remains operational using only peer vehicles and local decision-making.
 
-To realize this objective, the project implements a three-layer architecture: an application layer for safety
-message generation and consumption, a network layer for duplicate-aware forwarding and relay control, and a
-link layer for radio-facing frame transfer with channel sensing and optional reliability signaling. The
-network layer is the primary contribution, as it encapsulates decentralized dissemination logic including
-hop-limited propagation, replay suppression, directional eligibility checks, and signal-quality-informed
-hold-back forwarding. The same logical core is exercised in both embedded deployment and deterministic
-simulation to enable comparable evaluation across real and controlled environments.
+To realize this objective, the LoRa-based V2V mesh system is organized as a three-layer stack, with detailed
+layer responsibilities and design rationale presented in Section IV.
 
 This report documents the complete final-year project workflow from design rationale to implementation and
 validation. The evaluation combines real-world node trials and deterministic simulation to assess delivery

@@ -5,9 +5,8 @@
 Intelligent Transportation Systems (ITS) have been extensively developed around Dedicated Short-Range
 Communications (DSRC, IEEE 802.11p) and Cellular V2X (C-V2X), both of which are purpose-built for
 vehicular communication and remain central in standards-oriented deployments \cite{secure_iov,lorawan_v2roadside}.
-Accordingly, the present work does not argue that LoRa is intrinsically better than these technologies
-for mainstream V2V. Instead, this project adopts LoRa primarily for practical reasons: hardware
-availability in our context and substantially lower implementation cost for prototyping.
+Within this report's scope, LoRa is treated as a low-cost experimental medium for studying decentralized
+V2V safety-message dissemination under constrained-channel conditions.
 
 Prior literature shows that LoRa can still be a useful experimental platform for studying low-rate vehicular
 dissemination over sub-GHz links, including under mobility, when protocol design is constraint-aware
@@ -50,12 +49,10 @@ the link layer and controlled flooding at the network layer, avoiding route-tabl
 \subsection{Research Gap and Proposed Architecture}
 
 Based on the reviewed work, the key gap targeted here is the limited end-to-end validation of a fully
-decentralized LoRa-based vehicular mesh that can operate without RSUs, fixed gateways, or centralized
+decentralized LoRa-based V2V mesh system that can operate without RSUs, fixed gateways, or centralized
 scheduling/control in a final-year project-scale implementation \cite{lora_reliable_v2v_2025,routing_mesh_2020}.
 
-The architecture presented in this report addresses that gap using a three-layer design implemented on
-ESP32-class nodes: safety-message generation at the application layer, duplicate-aware and hop-bounded
-dissemination at the network layer, and channel-aware radio framing at the link layer. The implementation is
-validated through both real-node testing and deterministic simulation, enabling assessment of decentralized
-forwarding behavior under controlled and field-like conditions \cite{lora_mesh_emergency,lora_reliable_v2v_2025}.
+This gap motivates the design choices examined in later sections: managed flooding with duplicate suppression
+at network level, lightweight channel-aware transmission control at link level, and dual-mode evaluation using
+deterministic simulation and real-node trials \cite{lora_mesh_emergency,lora_reliable_v2v_2025}.
 

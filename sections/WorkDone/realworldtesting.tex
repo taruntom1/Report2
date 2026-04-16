@@ -9,8 +9,8 @@ coordinates, either physically measured or hardware-mocked, to establish a repea
 suitable for isolated testing of each subsystem. Node A served as the message originator across all test 
 cases, Nodes B and C functioned as intermediate relay candidates, and Node D served as the terminal receiver. 
 Separate monitoring terminals aggregated relay event timestamps and packet logs from all nodes, providing a 
-common time reference for cross-node latency measurements. All LoRa transceivers operated at 433~MHz or 
-868/915~MHz with a spreading factor of SF9, a bandwidth of 125~kHz, a coding rate of 4/5, and a nominal 
+common time reference for cross-node latency measurements. All LoRa transceivers operated at 433~MHz 
+with a spreading factor of SF9, a bandwidth of 125~kHz, a coding rate of 4/5, and a nominal 
 transmit power of +17~dBm, yielding a theoretical sensitivity floor of approximately $-137$~dBm and an 
 estimated line-of-sight range of 2~km per hop.
 
@@ -43,7 +43,7 @@ remained effective when messages from different priority tiers were simultaneous
 
 \subsubsection{Directional Propagation}
 
-Directional Propagation: The geographic propagation control mechanism was evaluated 
+The geographic propagation control mechanism was evaluated 
 using a four-node configuration in which Nodes B and C were positioned within a 
 northward angular arc of approximately $\pm 40^\circ$ relative to Node A, while Node D was 
 placed at a bearing of approximately $120^\circ$ east of north, well outside any $\pm 45^\circ$ directional cone 
@@ -55,7 +55,7 @@ the message as expected. Node D received the packet and delivered it locally, co
 radio reception, but its network layer computed the bearing from Node A to Node D as $120^\circ$ from north, 
 determined this to exceed the cone boundary, and suppressed re-transmission in accordance with the 
 deliver-only policy. The transition from OMNI to DIRECTIONAL mode reduced the total number of relay 
-events by 33% for this topology, and the geographic filtering operated entirely autonomously at each 
+events by 33\% for this topology, and the geographic filtering operated entirely autonomously at each 
 node through independent Haversine-based bearing computation against coordinates embedded in the packet 
 header, requiring no centralized arbitration.
 
@@ -80,7 +80,5 @@ confirms that distributed best-relay selection was achieved without any explicit
 
 Across all four evaluated subsystems, the system performed in accordance with its design specifications. 
 No routing loops, duplicate final deliveries, or spurious relay activations were observed during the 
-evaluation period. The collective results substantiate the proposition that a fully distributed, 
-infrastructure-free vehicular mesh network can enforce message priority, geographic propagation boundaries, 
-and efficient relay selection using only information embedded within each packet and signal quality 
-parameters measurable locally at each receiving node.
+evaluation period. The real-world results confirm practical operation of priority handling, geographic 
+propagation control, and relay suppression for the tested topology and operating conditions.

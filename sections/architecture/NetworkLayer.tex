@@ -1,38 +1,38 @@
 \subsection{Network Layer Architecture}
 
-The network layer constituted the control plane of the proposed LoRa-based vehicle-to-vehicle system and 
-was designed as a portable, hardware-independent core positioned between application services and radio-facing 
-transmission services. Its architectural role was to transform locally generated safety data into 
+The network layer constitutes the control plane of the proposed LoRa-based V2V mesh system and 
+is designed as a portable, hardware-independent core positioned between application services and radio-facing 
+transmission services. Its architectural role is to transform locally generated safety data into 
 dissemination-ready network frames, to evaluate received frames against propagation policy, and to 
-regulate rebroadcast behavior so that dissemination reliability could be improved without incurring unnecessary 
-channel occupation. This role was realized through explicit boundary abstractions that isolated forwarding 
+regulate rebroadcast behavior so that dissemination reliability is improved without incurring unnecessary 
+channel occupation. This role is realized through explicit boundary abstractions that isolate forwarding 
 intelligence from platform-specific communication and sensing mechanisms, thereby allowing identical network 
 behavior to be preserved across embedded deployments and host-side simulation environments.
 
-At the transmission boundary, each outgoing frame was structured as a fixed network header followed by 
-application payload bytes. The header encoded message identity, temporal validity, origin context, per-hop 
-transmitter context, and propagation constraints, so that downstream nodes could make forwarding decisions 
-from self-contained frame metadata. The fixed header length established deterministic parsing and bounded 
-overhead, while the payload limit was derived directly from the LoRa frame-size ceiling to guarantee that 
-all generated frames remained admissible for the underlying physical channel. Within this model, a unique 
-message identifier combined source identity with a local sequence progression, enabling replay suppression 
+At the transmission boundary, each outgoing frame is structured as a fixed network header followed by 
+application payload bytes. The header encodes message identity, temporal validity, origin context, per-hop 
+transmitter context, and propagation constraints, so that downstream nodes can make forwarding decisions 
+from self-contained frame metadata. The fixed header length establishes deterministic parsing and bounded 
+overhead, while the payload limit is derived directly from the LoRa frame-size ceiling to guarantee that 
+all generated frames remain admissible for the underlying physical channel. Within this model, a unique 
+message identifier combines source identity with a local sequence progression, enabling replay suppression 
 and idempotent handling throughout multi-hop dissemination.
 
-The layer distinguished immutable origin metadata from mutable per-hop transmitter metadata as a central 
-design principle. Origin metadata remained unchanged for the lifetime of a message and represented the initial 
-source state at creation time. By contrast, transmitter metadata was refreshed at every relay and represented 
-the most recent forwarding node. This semantic separation enabled the routing process to reason simultaneously 
-about global propagation intent and local progression, which was essential for both hold-back scheduling and 
+The layer distinguishes immutable origin metadata from mutable per-hop transmitter metadata as a central 
+design principle. Origin metadata remains unchanged for the lifetime of a message and represents the initial 
+source state at creation time. By contrast, transmitter metadata is refreshed at every relay and represents 
+the most recent forwarding node. This semantic separation enables the routing process to reason simultaneously 
+about global propagation intent and local progression, which is essential for both hold-back scheduling and 
 redundancy suppression in dynamic vehicular topologies.
 
-Operationally, the data plane followed two coordinated paths: synchronous origination and asynchronous 
-reception-driven forwarding. During origination, the layer validated payload admissibility, assembled the 
-network header using local temporal and mobility context, registered the message identity in a duplicate-tracking 
-structure, and emitted a single broadcast frame. During reception, incoming frames were first buffered through 
-a bounded event queue and then processed by worker execution contexts that performed parse, policy evaluation, 
-local delivery, and conditional relay scheduling. This decoupled architecture prevented receive callbacks from 
-becoming policy execution bottlenecks and improved temporal predictability under bursty traffic. The receive-path
-processing sequence is shown in Figure~\ref{fig:network-layer-sequence}.
+Operationally, the data plane follows two coordinated paths: synchronous origination and asynchronous 
+reception-driven forwarding. During origination, the layer validates payload admissibility, assembles the 
+network header using local temporal and mobility context, registers the message identity in a duplicate-tracking 
+structure, and emits a single broadcast frame. During reception, incoming frames are first buffered through 
+a bounded event queue and then processed by worker execution contexts that perform parse, policy evaluation, 
+local delivery, and conditional relay scheduling. This decoupled architecture prevents receive callbacks from 
+becoming policy execution bottlenecks and improves temporal predictability under bursty traffic. The receive-path
+processing sequence is shown in Fig.~\ref{fig:network-layer-sequence}.
 
 \begin{figure*}[!t]
 \centering
@@ -42,16 +42,16 @@ routing evaluation, local delivery, and deferred forwarding.}
 \label{fig:network-layer-sequence}
 \end{figure*}
 
-Forwarding decisions were produced by an ordered evaluation pipeline that prioritized safety and bounded 
-propagation. Frames were first screened for temporal expiry, replay status, and residual hop budget, 
+Forwarding decisions are produced by an ordered evaluation pipeline that prioritizes safety and bounded 
+propagation. Frames are first screened for temporal expiry, replay status, and residual hop budget, 
 followed by checks on distance-constrained dissemination and directional eligibility when directional 
-propagation was requested. Messages that satisfied these gates were considered relay candidates and assigned 
-a deferred forwarding delay rather than immediate retransmission. The delay was computed from a composite 
+propagation is requested. Messages that satisfy these gates are considered relay candidates and assigned 
+a deferred forwarding delay rather than immediate retransmission. The delay is computed from a composite 
 estimate of path progress and link quality, and then modulated by traffic priority so that urgent safety 
-traffic propagated with lower latency while less critical traffic was naturally delayed. This mechanism 
+traffic propagates with lower latency while less critical traffic is naturally delayed. This mechanism 
 implemented contention-aware spatial diversity by encouraging favorable relays to transmit earlier and 
 discouraging simultaneous redundant rebroadcasts. The ordered decision logic and resulting outcomes are
-summarized in Figure~\ref{fig:network-layer-decision}.
+summarized in Fig.~\ref{fig:network-layer-decision}.
 
 \begin{figure*}[!t]
 \centering
@@ -61,30 +61,30 @@ determine drop, deliver-only, or delayed forwarding outcomes.}
 \label{fig:network-layer-decision}
 \end{figure*}
 
-To further limit broadcast redundancy, the architecture incorporated two complementary suppression mechanisms. 
-First, duplicate filtering prevented repeated processing and forwarding of already observed message identities. 
-Second, queued relays could be canceled when subsequently overheard transmissions indicated that upstream 
+To further limit broadcast redundancy, the architecture incorporates two complementary suppression mechanisms. 
+First, duplicate filtering prevents repeated processing and forwarding of already observed message identities. 
+Second, queued relays can be canceled when subsequently overheard transmissions indicate that upstream 
 progression had already covered the local node's prospective forwarding contribution. This geometric suppression 
-strategy reduced superfluous retransmissions without requiring explicit coordination exchanges, which is 
+strategy reduces superfluous retransmissions without requiring explicit coordination exchanges, which is 
 advantageous in bandwidth-constrained and intermittently connected vehicular channels.
 
-Concurrency management was integral to architectural correctness. The network layer employed separate execution 
+Concurrency management is integral to architectural correctness. The network layer employs separate execution 
 contexts for receive-path processing and timer-driven relay emission, with mutex- and condition-variable-based 
-synchronization around bounded shared queues and callback handoff state. Lifecycle control was designed to be 
+synchronization around bounded shared queues and callback handoff state. Lifecycle control is designed to be 
 robust under repeated start-stop operation, ensuring deterministic initialization, safe termination of background 
 activity, and clean release of receive handlers during shutdown. This threading model provided clear separation 
 between ingress handling, routing computation, and deferred transmission timing.
 
-The architecture also exposed bounded configuration controls that governed duplicate-cache capacity, relay-queue 
+The architecture also exposes bounded configuration controls that govern duplicate-cache capacity, relay-queue 
 capacity, receive-queue depth, and forwarding delay limits. These parameters defined the operational envelope 
 for memory consumption, latency, and admission behavior, and therefore enabled systematic trade-off analysis 
 between responsiveness and channel load. In combination with fixed frame-level constraints, the configuration 
-model promoted predictable runtime behavior across heterogeneous hardware targets.
+model promotes predictable runtime behavior across heterogeneous hardware targets.
 
-Finally, the same network-layer core was embedded in a deterministic simulation runtime to support repeatable 
-validation under controlled mobility and channel conditions. Each simulated node instantiated the same logical 
-network functionality as a deployed node, while a shared virtual clock and event-driven channel model governed 
-transmission timing, reception outcomes, and channel impairments. Because routing and forwarding semantics were 
-preserved across deployment and simulation, the architecture supported direct transfer of behavioral findings 
+Finally, the same network-layer core is embedded in a deterministic simulation runtime to support repeatable 
+validation under controlled mobility and channel conditions. Each simulated node instantiates the same logical 
+network functionality as a deployed node, while a shared virtual clock and event-driven channel model governs 
+transmission timing, reception outcomes, and channel impairments. Because routing and forwarding semantics are 
+preserved across deployment and simulation, the architecture supports direct transfer of behavioral findings 
 from laboratory evaluation to field-oriented configurations.
 
