@@ -1,6 +1,45 @@
 \section{Problem Statement}
 
-% Define the problem you are addressing
-% State objectives and goals clearly
-% Explain the significance of solving this problem
+\subsection{Problem Definition}
+
+This project addresses the design and validation of an infrastructure-free Vehicle-to-Vehicle
+(V2V) communication system for cooperative safety-message dissemination. The work is motivated by a practical
+project constraint: LoRa hardware was available and affordable for implementation, making it suitable for
+building and evaluating a complete prototype in our academic setting. The target is therefore not to compete
+with purpose-built DSRC/C-V2X deployment ecosystems, but to answer a narrower technical question: can a
+\textit{fully decentralized} vehicular mesh achieve reliable and efficient multi-hop safety dissemination
+using only local observations and peer-to-peer forwarding.
+
+The problem is challenging because LoRa links impose strict communication constraints, including low data rate,
+long Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}.
+Without careful protocol control, these constraints can lead to excessive collisions, redundant rebroadcast,
+and unstable dissemination behavior in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}.
+Hence, the central problem is to design a decentralized protocol stack that preserves dissemination reach while
+keeping channel usage bounded and operational behavior predictable.
+
+\subsection{Objectives and Goals}
+
+The project objectives are:
+
+\begin{itemize}
+	\item Design a three-layer architecture with clear separation between application logic, forwarding control,
+	and radio-facing transmission services.
+	\item Implement decentralized network-layer dissemination using managed flooding, duplicate suppression,
+	hop-bounded propagation, and policy-aware relay timing.
+	\item Implement link-layer channel-aware behavior, including sensing-driven transmission admission and
+	optional reliability signaling for critical traffic classes.
+	\item Validate the same logical forwarding behavior in both deterministic simulation and real-node testing,
+	so results can be compared across controlled and field-like conditions.
+	\item Demonstrate that the system can deliver safety messages across multiple hops with bounded redundancy,
+	without dependence on RSUs, fixed gateways, or centralized coordination.
+\end{itemize}
+
+\subsection{Significance of the Problem}
+
+Solving this problem is significant at three levels. First, it provides a low-cost and reproducible platform
+for studying decentralized vehicular networking in a college project environment. Second, it contributes
+practical evidence on infrastructure-free dissemination behavior for scenarios where fixed communication
+support may be sparse or temporarily unavailable \cite{lora_mesh_emergency,lora_reliable_v2v_2025}. Third,
+it demonstrates an engineering pathway in which identical network-layer logic can be exercised in simulation
+and embedded deployment, improving confidence in protocol behavior before wider real-world scaling.
 

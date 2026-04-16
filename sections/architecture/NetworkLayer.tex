@@ -31,12 +31,14 @@ network header using local temporal and mobility context, registered the message
 structure, and emitted a single broadcast frame. During reception, incoming frames were first buffered through 
 a bounded event queue and then processed by worker execution contexts that performed parse, policy evaluation, 
 local delivery, and conditional relay scheduling. This decoupled architecture prevented receive callbacks from 
-becoming policy execution bottlenecks and improved temporal predictability under bursty traffic.
+becoming policy execution bottlenecks and improved temporal predictability under bursty traffic. The receive-path
+processing sequence is shown in Figure~\ref{fig:network-layer-sequence}.
 
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.95\textwidth]{assets/architecture/Network_layer_seq.png}
-\caption{Receive-path sequence of network-layer processing, from link-layer callback ingestion and queueing to routing evaluation, local delivery, and deferred forwarding.}
+\caption{Receive-path sequence of network-layer processing, from link-layer callback ingestion and queueing to 
+routing evaluation, local delivery, and deferred forwarding.}
 \label{fig:network-layer-sequence}
 \end{figure*}
 
@@ -48,7 +50,8 @@ a deferred forwarding delay rather than immediate retransmission. The delay was 
 estimate of path progress and link quality, and then modulated by traffic priority so that urgent safety 
 traffic propagated with lower latency while less critical traffic was naturally delayed. This mechanism 
 implemented contention-aware spatial diversity by encouraging favorable relays to transmit earlier and 
-discouraging simultaneous redundant rebroadcasts.
+discouraging simultaneous redundant rebroadcasts. The ordered decision logic and resulting outcomes are
+summarized in Figure~\ref{fig:network-layer-decision}.
 
 \begin{figure*}[!t]
 \centering

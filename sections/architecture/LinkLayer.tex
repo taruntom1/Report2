@@ -23,7 +23,8 @@ reducing collision probability under shared medium contention. When repeated bus
 bounded retry behavior with randomized backoff was applied to decorrelate concurrent transmitters and limit 
 persistent synchronization effects. If the medium remained unavailable beyond the configured sensing budget, 
 the pending transmission was discarded to prevent unbounded latency growth and queue destabilization. 
-This policy favored predictable temporal behavior and spectrum discipline over aggressive persistence.
+This policy favored predictable temporal behavior and spectrum discipline over aggressive persistence. The
+corresponding runtime state transitions are shown in Figure~\ref{fig:link-layer-state-machine}.
 
 \begin{figure*}[!t]
 \centering

@@ -43,20 +43,21 @@ remained effective when messages from different priority tiers were simultaneous
 
 \subsubsection{Directional Propagation}
 
-The geographic propagation control mechanism was evaluated using a five-node configuration in which Nodes 
-B, C, and D were positioned within a northward angular arc of approximately $\pm 40^\circ$ relative to Node 
-A, while Node E was placed at a bearing of approximately $120^\circ$ east of north, well outside any $\pm 45^\circ$ 
-directional cone aligned northward. In OMNI mode, a broadcast message with a maximum hop count of two was 
-received and relayed by all four surrounding nodes, producing five total relay events including the 
-origination transmission. The test was repeated in DIRECTIONAL mode with a target heading of $0^\circ$ (due north), 
-defining a $\pm 45^\circ$ propagation cone. Nodes B, C, and D, all falling within the cone, received and relayed 
-the message as expected. Node E received the packet and delivered it locally, confirming successful radio 
-reception, but its network layer computed the bearing from Node A to Node E as $120^\circ$ from north, 
-determined this to exceed the cone boundary, and suppressed re-transmission in accordance with the deliver-only 
-policy. The transition from OMNI to DIRECTIONAL mode reduced the total number of relay events by 40\% for this 
-topology, and the geographic filtering operated entirely autonomously at each node through independent 
-Haversine-based bearing computation against coordinates embedded in the packet header, requiring no centralized 
-arbitration.
+Directional Propagation: The geographic propagation control mechanism was evaluated 
+using a four-node configuration in which Nodes B and C were positioned within a 
+northward angular arc of approximately $\pm 40^\circ$ relative to Node A, while Node D was 
+placed at a bearing of approximately $120^\circ$ east of north, well outside any $\pm 45^\circ$ directional cone 
+aligned northward. In OMNI mode, a broadcast message with a maximum hop count of two was received 
+and relayed by all three surrounding nodes, producing four total relay events including the origination 
+transmission. The test was repeated in DIRECTIONAL mode with a target heading of $0^\circ$ (due north), 
+defining a $\pm 45^\circ$ propagation cone. Nodes B and C, both falling within the cone, received and relayed 
+the message as expected. Node D received the packet and delivered it locally, confirming successful 
+radio reception, but its network layer computed the bearing from Node A to Node D as $120^\circ$ from north, 
+determined this to exceed the cone boundary, and suppressed re-transmission in accordance with the 
+deliver-only policy. The transition from OMNI to DIRECTIONAL mode reduced the total number of relay 
+events by 33% for this topology, and the geographic filtering operated entirely autonomously at each 
+node through independent Haversine-based bearing computation against coordinates embedded in the packet 
+header, requiring no centralized arbitration.
 
 \subsubsection{Intelligent Relay Timing}
 
