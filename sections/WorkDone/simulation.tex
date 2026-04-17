@@ -1,11 +1,11 @@
 \subsection{Simulation}
 
-The simulation study was designed as a deterministic host-side validation environment for the network-layer 
-logic, with the primary objective of evaluating forwarding behavior under controlled channel and mobility 
-conditions without dependence on embedded timing artifacts. Rather than introducing an alternative protocol 
-formulation, the study preserved the same network-layer decision process used in deployment and exercised it 
-through a virtualized communication context. This design choice ensured that observed behavior reflected 
-routing and suppression policy interactions, not differences between production and test code paths.
+The simulation study was designed as a host-side validation environment for the network-layer logic, with 
+the primary objective of evaluating forwarding behavior under controlled channel and mobility conditions 
+without dependence on embedded timing artifacts. Rather than introducing an alternative protocol formulation, 
+the study preserved the same network-layer decision process used in deployment and exercised it through a 
+virtualized communication context. This ensured that observed behavior reflected routing and suppression 
+policy interactions, not differences between production and test code paths.
 
 The scope of evaluation covered both transport-level effects and network-layer forwarding semantics. The 
 simulation environment modeled virtual time progression, topology evolution, and configurable channel 
@@ -18,24 +18,22 @@ Time evolution was governed by an explicit virtual clock to eliminate host sched
 ordering. Scenario progression occurred only through deliberate time advancement, allowing tests to assert 
 not only eventual delivery but also the absence of premature delivery under insufficient elapsed time. 
 Event processing followed a stable ordering policy, so concurrent transmissions, deferred relays, and 
-queued channel actions were resolved consistently across repeated runs. This deterministic execution model 
-was essential for separating protocol behavior from platform variability and for supporting strict regression 
-comparison.
+queued channel actions were resolved consistently across repeated runs. This execution model separated 
+protocol behavior from platform variability and supported strict regression comparison.
 
 Scenario specification exposed controlled configuration of channel timing, impairment intensity, congestion 
 behavior, and randomization seed, together with per-node initial state and mobility evolution. Mobility was 
-represented as deterministic kinematic progression with scheduled state updates, enabling reproducible 
-transitions between disconnected and connected topologies. Because topology change and event processing 
-were integrated into a single ordered step sequence, the exact virtual time at which connectivity shifted 
-could be asserted and reproduced.
+represented as kinematic progression with scheduled state updates, enabling repeatable transitions between 
+disconnected and connected topologies. Because topology change and event processing were integrated into a 
+single ordered step sequence, the exact virtual time at which connectivity shifted could be asserted.
 
 The channel model combined distance-dependent attenuation with receiver sensitivity gating and optional 
 stochastic impairment mechanisms. Under this model, reception depended on whether signal conditions remained 
 admissible at the receiver, while optional packet-error and congestion-driven loss mechanisms introduced 
 controlled non-ideal behavior. For stochastic branches, pseudo-random decisions were seed-controlled and 
 tied to event identity, so fixed seeds yielded identical outcomes and different seeds yielded intentional 
-divergence. This balance enabled both deterministic verification and sensitivity studies without changing 
-core forwarding logic.
+divergence. This balance enabled repeatable verification and sensitivity studies without changing core 
+forwarding logic.
 
 Validation was performed through a reusable harness that captured application-visible deliveries at each 
 node and compared both payload content and dissemination structure. Assertions were made using stepped 
@@ -62,8 +60,8 @@ receivers could observe arrival before farther receivers under equal transmissio
 Impairment and load experiments verified that packet-error and congestion mechanisms affected delivery 
 in expected directions. Strict error thresholds and forced congestion regimes reduced successful receptions 
 and increased drop-related counters, whereas light-load regimes below congestion thresholds preserved 
-delivery continuity. These outcomes indicate that the simulation could represent both nominal and 
-stressed channel conditions while retaining deterministic interpretability.
+delivery continuity. These outcomes indicate that the simulation could represent both nominal and stressed 
+channel conditions with clear interpretability.
 
 Most importantly, forwarding-semantics validation under simulation confirmed correct behavior for 
 lifetime-bounded dissemination, directional relay eligibility, multi-hop reach extension, and 
@@ -87,8 +85,6 @@ modeled through complete physical-layer waveform interaction. Accordingly, the s
 evidence of network-layer logical correctness, timing consistency, and resilience under modeled 
 conditions, while not claiming full physical-fidelity prediction for all deployment environments.
 
-Overall, the simulation campaign supplied coherent evidence of logical correctness, timing consistency, 
-and forwarding behavior under modeled nominal and adverse conditions. By combining deterministic virtual-time 
-execution, policy-focused scenario design, and complementary trace and metric assertions, this section 
-establishes a reproducible baseline that is complemented by the real-world measurements reported in the 
-next subsection.
+Overall, the simulation campaign supplied coherent evidence of logical correctness, timing consistency, and 
+forwarding behavior under modeled nominal and adverse conditions. This section establishes a reproducible 
+baseline that is complemented by the real-world measurements reported in the next subsection.

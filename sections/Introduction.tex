@@ -1,29 +1,20 @@
 \section{Introduction}
 
 Vehicle-to-Vehicle (V2V) communication is a key enabler for cooperative safety functions such as collision
-warnings, hazard propagation, and context-aware driver assistance. In production-oriented ITS ecosystems,
-DSRC (IEEE 802.11p) and cellular V2X (C-V2X) are established technologies intentionally designed for this
-domain and continue to be central to large-scale deployments and standardization efforts \cite{secure_iov,lorawan_v2roadside}.
-Accordingly, this project does not position LoRa as a replacement for those systems on principle. Instead,
-the work is motivated by a practical engineering constraint in our final-year project setting: LoRa hardware
-was readily available to us, and it offered a significantly lower-cost platform for building and validating
-an end-to-end LoRa-based V2V mesh system prototype.
+warnings, hazard propagation, and context-aware driver assistance. DSRC (IEEE 802.11p) and cellular V2X
+(C-V2X) remain the primary technologies for deployment and standardization \cite{secure_iov,lorawan_v2roadside}.
+This project investigates LoRa as a low-cost experimental platform for decentralized dissemination in
+infrastructure-constrained settings, not as a replacement for purpose-built vehicular standards.
 
-Within that constraint, the core technical question addressed in this report is whether a \textit{fully
-decentralized} vehicular mesh can provide useful safety-message dissemination without relying on roadside
-infrastructure, centralized coordinators, or pre-planned route control. This focus is especially relevant to
+The core question is whether a \textit{fully decentralized} vehicular mesh can provide useful multi-hop
+safety-message dissemination using only peer forwarding and local decision-making. This focus is relevant to
 academic prototyping and to scenarios where infrastructure support may be sparse, unavailable, or temporarily
-disrupted \cite{lora_mesh_emergency,lora_mesh_iot}. The objective, therefore, is not to maximize throughput
-against infrastructure-backed systems, but to design and validate a robust distributed communication approach
-that remains operational using only peer vehicles and local decision-making.
+disrupted \cite{lora_mesh_emergency,lora_mesh_iot}.
 
-To realize this objective, the LoRa-based V2V mesh system is organized as a three-layer stack, with detailed
-layer responsibilities and design rationale presented in Section IV.
+The proposed LoRa-based V2V mesh system uses a three-layer stack, with detailed responsibilities and design
+rationale presented in Section IV.
 
 This report documents the complete final-year project workflow from design rationale to implementation and
-validation. The evaluation combines real-world node trials and deterministic simulation to assess delivery
-correctness, forwarding behavior, redundancy suppression, and timing consistency under different operating
-conditions. Together, these results provide evidence that a low-cost LoRa-based platform can serve as a
-credible foundation for studying decentralized V2V networking principles and cooperative safety dissemination
-in an infrastructure-free setting \cite{lora_reliable_v2v_2025,exp_study_lora_vehicle}.
+validation. Results are presented through complementary simulation and real-node experiments, followed by a
+consolidated discussion of implications and limitations.
 

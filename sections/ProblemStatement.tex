@@ -2,11 +2,8 @@
 
 \subsection{Problem Definition}
 
-This project addresses the design and validation of an infrastructure-free Vehicle-to-Vehicle
-(V2V) communication system for cooperative safety-message dissemination. Given the project constraints
-outlined in the introduction, the central technical question is whether a \textit{fully decentralized}
-LoRa-based V2V mesh system can achieve reliable and efficient multi-hop safety dissemination
-using only local observations and peer-to-peer forwarding.
+This work evaluates whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and
+efficient multi-hop safety-message dissemination for infrastructure-free operation.
 
 The problem is challenging because LoRa links impose strict communication constraints, including low data rate,
 long Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}.
@@ -20,14 +17,12 @@ keeping channel usage bounded and operational behavior predictable.
 The project objectives are:
 
 \begin{itemize}
-	\item Design a three-layer architecture with clear separation between application logic, forwarding control,
+	\item Implement a three-layer architecture with clear separation between application logic, forwarding control,
 	and radio-facing transmission services.
 	\item Implement decentralized network-layer dissemination using managed flooding, duplicate suppression,
 	hop-bounded propagation, and policy-aware relay timing.
 	\item Implement link-layer channel-aware behavior, including sensing-driven transmission admission and
 	optional reliability signaling for critical traffic classes.
-	\item Validate the same logical forwarding behavior in both deterministic simulation and real-node testing,
-	so results can be compared across controlled and field-like conditions.
 	\item Demonstrate that the system can deliver safety messages across multiple hops with bounded redundancy,
 	without dependence on RSUs, fixed gateways, or centralized coordination.
 \end{itemize}
