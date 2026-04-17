@@ -1,0 +1,31 @@
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+Vehicle-to-Vehicle (V2V) communication is a critical enabler for cooperative driver 
+assistance, yet established technologies such as DSRC and C-V2X presuppose infrastructure 
+support that may be unavailable, sparse, or financially infeasible in resource-constrained 
+deployment scenarios. This paper addresses the design and validation of a fully 
+decentralized LoRa-based V2V mesh system capable of reliable multi-hop safety-message 
+dissemination using only peer-to-peer forwarding and local decision-making, without 
+dependence on roadside units, fixed gateways, or centralized coordination. While LoRa 
+is not proposed as a replacement for purpose-built vehicular standards, its low cost
+ and accessibility make it a compelling experimental platform for studying decentralized 
+ dissemination under constrained sub-GHz channel conditions. The proposed system is 
+ organized as a three-layer architecture comprising an Application Layer for service-level 
+ logic, a Network Layer implementing managed flooding with duplicate suppression, 
+ hop-bounded propagation, and signal-quality-weighted relay timing, and a Link Layer 
+ providing channel-aware transmission through listen-before-send access control and 
+ selective acknowledgment-based reliability. Validation is conducted through complementary 
+ methodologies: a deterministic host-side simulation using virtual time progression and 
+ configurable channel impairments to verify forwarding semantics under reproducible 
+ conditions, and real-world experiments with four LoRa nodes demonstrating multi-hop 
+ routing, QoS-aware priority differentiation, directional geographic propagation, and 
+ autonomous relay suppression. Experimental results confirm end-to-end message delivery 
+ across nodes beyond direct transmission range, correct priority ordering with an observed 
+ delay ratio consistent with the intended fourfold scaling, a 33\% reduction in relay 
+ events under directional mode, and distributed best-relay selection without explicit 
+ inter-node negotiation. These findings establish that a low-cost LoRa-based platform 
+ can serve as a credible foundation for prototyping and studying decentralized vehicular 
+ networking principles in infrastructure-free environments.
+
+\vspace{0.5em}
+\noindent\textbf{Keywords:} Vehicle-to-vehicle communication, LoRa mesh networks, cooperative safety, decentralized networking, intelligent transportation systems.
