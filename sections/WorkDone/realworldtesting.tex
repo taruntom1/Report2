@@ -32,7 +32,7 @@ capability without recourse to pre-configured routing tables or infrastructure e
 \subsubsection{Priority-Based Delivery}
 
 QoS enforcement was assessed by injecting two messages at Node A in rapid succession, a LOW priority message 
-followed by an EMERGENCY priority message at an interval of approximately 1.5~seconds, both routed through 
+followed by an EMERGENCY priority message at an interval of approximately 150~ms, both routed through 
 Node B toward Node C. Node B's relay log recorded a hold-back delay of approximately 320~ms prior to forwarding 
 the LOW priority message and approximately 75~ms prior to forwarding the EMERGENCY message. Delivery timestamps 
 at Node C confirmed that the EMERGENCY message arrived before the LOW priority message despite having been 
