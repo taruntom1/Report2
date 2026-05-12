@@ -17,15 +17,15 @@
 \contentsline {section}{\numberline {3.1}Top-level Overview}{5}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Network Layer Architecture}{6}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Link Layer Architecture}{9}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Techniques}{12}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Results}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Simulation}{13}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Real-World Testing}{15}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Experimental Methodology}{15}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Multi-Hop Mesh Routing}{16}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Priority-Based Delivery}{16}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Directional Propagation}{17}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Intelligent Relay Timing}{17}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Summary}{18}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Discussion}{18}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusion and Future Work}{19}{chapter.5}%
+\contentsline {section}{\numberline {3.4}Techniques}{11}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Results}{12}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simulation}{12}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Real-World Testing}{14}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Experimental Methodology}{14}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Multi-Hop Mesh Routing}{15}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Priority-Based Delivery}{15}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Directional Propagation}{15}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Intelligent Relay Timing}{16}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Summary}{16}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Discussion}{17}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusion and Future Work}{18}{chapter.5}%

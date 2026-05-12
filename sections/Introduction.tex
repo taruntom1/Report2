@@ -2,37 +2,37 @@
 
 \section{Overview}
 
-Vehicle-to-Vehicle (V2V) communication is a key enabler for cooperative safety functions such as collision
-warnings, hazard propagation, and context-aware driver assistance. DSRC (IEEE 802.11p) and cellular V2X
-(C-V2X) remain the primary technologies for deployment and standardization \cite{secure_iov,lorawan_v2roadside}.
-This project investigates LoRa as a low-cost experimental platform for decentralized dissemination in
-infrastructure-constrained settings, not as a replacement for purpose-built vehicular standards.
+Vehicle-to-Vehicle (V2V) communication lets vehicles share safety information for things like collision
+warnings, hazard alerts, and context-aware driver assistance. DSRC (IEEE 802.11p) and cellular V2X
+(C-V2X) are still the main technologies used for deployment and standardization \cite{secure_iov,lorawan_v2roadside}.
+In this project, we look at LoRa as a low-cost way to experiment with decentralized message dissemination in
+infrastructure-constrained settings. We do not treat it as a replacement for purpose-built vehicular standards.
 
-The proposed LoRa-based V2V mesh system uses a three-layer stack, with detailed responsibilities and design
-rationale presented in Chapter 3.
+The proposed LoRa-based V2V mesh system uses a three-layer stack. The detailed responsibilities and design
+rationale are presented in Chapter 3.
 
-This report documents the complete final-year project workflow from design rationale to implementation and
-validation. Results are presented through complementary simulation and real-node experiments, followed by a
-consolidated discussion of implications and limitations.
+This report covers the full final-year project workflow, from the design choices to the implementation and
+validation. We show results using both simulation and real-node experiments, and then discuss what worked,
+what did not, and the main limitations.
 
 \section{Motivation}
 
-The core question is whether a \textit{fully decentralized} vehicular mesh can provide useful multi-hop
-safety-message dissemination using only peer forwarding and local decision-making. This focus is relevant to
-academic prototyping and to scenarios where infrastructure support may be sparse, unavailable, or temporarily
+The main question for us is whether a \textit{fully decentralized} vehicular mesh can still be useful for multi-hop
+safety-message dissemination when it only relies on peer forwarding and local decisions. This matters for
+academic prototyping and also for cases where infrastructure support may be sparse, unavailable, or temporarily
 disrupted \cite{lora_mesh_emergency,lora_mesh_iot}.
 
 \section{Problem Definition}
 
-This work evaluates whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and
-efficient multi-hop safety-message dissemination for infrastructure-free operation.
+This work checks whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and efficient
+multi-hop safety-message dissemination when operating without infrastructure.
 
-The problem is challenging because LoRa links impose strict communication constraints, including low data rate,
-long Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}.
-Without careful protocol control, these constraints can lead to excessive collisions, redundant rebroadcast,
-and unstable dissemination behavior in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}.
-Hence, the central problem is to design a decentralized protocol stack that preserves dissemination reach while
-keeping channel usage bounded and operational behavior predictable.
+This is challenging because LoRa links have strict communication constraints: low data rate, long Time-on-Air,
+duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}. If we do not control the
+protocol properly, these constraints can cause collisions, too many redundant rebroadcasts, and unstable
+dissemination in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}. So the main problem
+is designing a decentralized protocol stack that still reaches far enough, but keeps channel usage bounded and
+the overall behavior predictable.
 
 \section{Objectives}
 
@@ -51,13 +51,13 @@ The project objectives are:
 
 \section{Contributions}
 
-Experimental results confirm end-to-end message delivery across nodes beyond direct transmission range, correct
-priority ordering with an observed delay ratio consistent with the intended fourfold scaling, a 33\% reduction
-in relay events under directional mode, and distributed best-relay selection without explicit inter-node
+Our experimental results confirm end-to-end message delivery across nodes beyond direct transmission range,
+correct priority ordering with an observed delay ratio consistent with the intended fourfold scaling, a 33\%
+reduction in relay events under directional mode, and distributed best-relay selection without explicit inter-node
 negotiation.
 
-Simulation and real-node evaluations provided consistent evidence of intended system behavior. The simulation
-campaign verified forwarding correctness, bounded propagation policies, and timing consistency under modeled
-channel impairments. Four-node field testing demonstrated multi-hop reach extension, priority-aware relay
+Simulation and real-node evaluations both showed the intended system behavior. The simulation campaign helped
+us verify forwarding correctness, bounded propagation policies, and timing consistency under modeled channel
+impairments. Then, four-node field testing demonstrated multi-hop reach extension, priority-aware relay
 ordering, directional propagation control, and autonomous suppression of redundant relays.
 

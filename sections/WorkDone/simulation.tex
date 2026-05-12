@@ -1,88 +1,86 @@
-The simulation study was designed as a host-side validation environment for the network-layer logic, with 
-the primary objective of evaluating forwarding behavior under controlled channel and mobility conditions 
-without dependence on embedded timing artifacts. Rather than introducing an alternative protocol formulation, 
-the study preserved the same network-layer decision process used in deployment and exercised it through a 
-virtualized communication context. This ensured that observed behavior reflected routing and suppression 
-policy interactions, not differences between production and test code paths.
+The simulation study was set up as a host-side validation environment for the network-layer logic. The main
+goal was to evaluate forwarding behavior under controlled channel and mobility conditions, without getting
+confused by embedded timing artifacts. We did not create a separate protocol just for testing. Instead, we
+kept the same network-layer decision process used in the real deployment and ran it in a virtualized
+communication setup. This way, any behavior we observed came from the routing and suppression policies, not
+from having different code paths for production vs testing.
 
-The scope of evaluation covered both transport-level effects and network-layer forwarding semantics. The 
-simulation environment modeled virtual time progression, topology evolution, and configurable channel 
-impairments, while the forwarding pipeline remained unchanged at each node. Consequently, outcome traces 
-could be interpreted as direct evidence of how duplicate handling, relay delay policy, and hop-limited 
-dissemination behaved under reproducible operating scenarios. The methodology followed a staged progression 
-from baseline delivery correctness to forwarding-policy validation and then to determinism and scalability stress.
+The evaluation covered both channel/transport-level effects and network-layer forwarding semantics. The
+simulation modeled virtual time progression, topology changes, and configurable channel impairments, while the
+forwarding pipeline at each node stayed unchanged. Because of that, the traces can be read as direct evidence
+of how duplicate handling, relay delay policy, and hop-limited dissemination behave in reproducible scenarios.
+We followed a staged approach: first basic delivery correctness, then forwarding-policy validation, and then
+determinism and scalability stress.
 
-Time evolution was governed by an explicit virtual clock to eliminate host scheduling jitter from causal 
-ordering. Scenario progression occurred only through deliberate time advancement, allowing tests to assert 
-not only eventual delivery but also the absence of premature delivery under insufficient elapsed time. 
-Event processing followed a stable ordering policy, so concurrent transmissions, deferred relays, and 
-queued channel actions were resolved consistently across repeated runs. This execution model separated 
-protocol behavior from platform variability and supported strict regression comparison.
+Time evolution was controlled using an explicit virtual clock, so host scheduling jitter did not affect causal
+ordering. The scenario only moved forward when we deliberately advanced time. This let us test not only
+"eventual delivery" but also verify that delivery does not happen too early when insufficient virtual time has
+elapsed. Event processing followed a stable ordering policy, so concurrent transmissions, deferred relays, and
+queued channel actions were resolved consistently across repeated runs. This helped separate protocol behavior
+from platform variability and supported strict regression comparisons.
 
-Scenario specification exposed controlled configuration of channel timing, impairment intensity, congestion 
-behavior, and randomization seed, together with per-node initial state and mobility evolution. Mobility was 
-represented as kinematic progression with scheduled state updates, enabling repeatable transitions between 
-disconnected and connected topologies. Because topology change and event processing were integrated into a 
-single ordered step sequence, the exact virtual time at which connectivity shifted could be asserted.
+The scenarios allowed controlled configuration of channel timing, impairment intensity, congestion behavior,
+and randomization seed, along with per-node initial state and mobility evolution. Mobility was represented as
+kinematic progression with scheduled state updates, so we could repeat transitions between disconnected and
+connected topologies. Since topology updates and event processing were integrated into a single ordered step
+sequence, we could also assert the exact virtual time when connectivity changed.
 
-The channel model combined distance-dependent attenuation with receiver sensitivity gating and optional 
-stochastic impairment mechanisms. Under this model, reception depended on whether signal conditions remained 
-admissible at the receiver, while optional packet-error and congestion-driven loss mechanisms introduced 
-controlled non-ideal behavior. For stochastic branches, pseudo-random decisions were seed-controlled and 
-tied to event identity, so fixed seeds yielded identical outcomes and different seeds yielded intentional 
-divergence. This balance enabled repeatable verification and sensitivity studies without changing core 
-forwarding logic.
+The channel model combined distance-dependent attenuation with receiver sensitivity gating and optional
+stochastic impairments. Reception depended on whether the signal conditions were admissible at the receiver.
+On top of that, optional packet-error and congestion-driven loss mechanisms introduced controlled non-ideal
+behavior. For the stochastic parts, pseudo-random decisions were seed-controlled and tied to event identity.
+So with a fixed seed we got identical outcomes, and with different seeds we got intentional divergence. This
+balance let us do repeatable verification and sensitivity studies without modifying the forwarding logic.
 
-Validation was performed through a reusable harness that captured application-visible deliveries at each 
-node and compared both payload content and dissemination structure. Assertions were made using stepped 
-virtual-time progression, permitting precise checks on temporal causality, deferred forwarding, and 
-timeout-related behavior. In parallel, aggregate channel and delivery metrics were collected to quantify 
-retransmission activity, collision effects, packet-error losses, congestion drops, latency trends, and 
-utilization levels. The combined use of trace-level and aggregate evidence strengthened confidence in 
-both functional correctness and system-level behavior.
+Validation was done using a reusable harness that captured application-visible deliveries at each node. We
+checked both payload content and the overall dissemination structure. Assertions were made using stepped
+virtual-time progression, which allowed precise checks on temporal causality, deferred forwarding, and
+timeout-related behavior. In parallel, we collected aggregate channel and delivery metrics to quantify
+retransmission activity, collision effects, packet-error losses, congestion drops, latency trends, and
+utilization. Using both trace-level and aggregate evidence increased confidence in functional correctness and
+system-level behavior.
 
-Baseline results confirmed expected fan-out properties for broadcast dissemination, preservation 
-of payload integrity, and correct exclusion of sender self-delivery. Reachability outcomes tracked 
-configured radio conditions: nearby receivers were served under admissible signal budgets, while 
-distant receivers were excluded until mobility brought them into effective communication range. 
-These observations established that delivery behavior remained consistent with geometric and sensitivity 
-constraints before higher-order forwarding policies were considered.
+Baseline results confirmed expected fan-out for broadcast dissemination, preserved payload integrity, and
+correctly excluded sender self-delivery. Reachability followed the configured radio conditions: nearby
+receivers were served when the signal budget was admissible, while distant receivers were excluded until
+mobility brought them into effective communication range. This showed that basic delivery behavior matched
+geometric and sensitivity constraints before considering higher-level forwarding policies.
 
-Temporal and channel-access evaluations demonstrated that delivery in timed operation depended 
-on sufficient virtual-time advancement and that channel contention produced deferred transmissions 
-rather than uncontrolled immediate rebroadcast. Under concurrent access, overlapping activity produced 
-measurable collision-related failures, while controlled deferral and retry behavior maintained bounded 
-progression. Propagation-delay experiments further showed physically consistent ordering in which nearer 
-receivers could observe arrival before farther receivers under equal transmission origin.
+Temporal and channel-access evaluations showed that delivery depends on advancing virtual time, and that
+contention leads to deferred transmissions rather than uncontrolled immediate rebroadcasts. With concurrent
+access, overlapping activity produced measurable collision-related failures, while controlled deferral and
+retry behavior still kept progression bounded. Propagation-delay experiments also showed physically consistent
+ordering where nearer receivers can observe arrival before farther receivers when the transmission origin is
+the same.
 
-Impairment and load experiments verified that packet-error and congestion mechanisms affected delivery 
-in expected directions. Strict error thresholds and forced congestion regimes reduced successful receptions 
-and increased drop-related counters, whereas light-load regimes below congestion thresholds preserved 
-delivery continuity. These outcomes indicate that the simulation could represent both nominal and stressed 
-channel conditions with clear interpretability.
+Impairment and load experiments verified that packet-error and congestion mechanisms affected delivery in the
+expected directions. Strict error thresholds and forced congestion reduced successful receptions and increased
+drop-related counters, while light-load regimes below congestion thresholds preserved delivery continuity.
+This indicates the simulation can represent both nominal and stressed channel conditions in an interpretable
+way.
 
-Most importantly, forwarding-semantics validation under simulation confirmed correct behavior for 
-lifetime-bounded dissemination, directional relay eligibility, multi-hop reach extension, and 
-duplicate suppression at application-delivery boundaries. Lifetime constraints prevented stale 
-forwarding beyond configured validity windows, directional policy constrained relay participation 
-according to propagation intent, and relaying extended delivery to nodes outside direct source reach. 
-When redundant copies arrived through distinct paths, delivery remained idempotent at the receiver 
-interface, demonstrating effective suppression of duplicate application exposure.
+Most importantly, simulation-based validation of forwarding semantics confirmed correct behavior for
+lifetime-bounded dissemination, directional relay eligibility, multi-hop reach extension, and duplicate
+suppression at the application-delivery boundary. Lifetime constraints prevented stale forwarding beyond the
+configured validity window. Directional policy constrained relay participation based on propagation intent.
+Relaying extended delivery to nodes outside direct source reach. When redundant copies arrived through
+different paths, delivery stayed idempotent at the receiver interface, showing effective suppression of
+duplicate application exposure.
 
-Scalability and repeatability assessments provided additional evidence of practical robustness. 
-Large-node broadcast workloads sustained expected dissemination coverage, and higher-node stepping 
-workloads remained within practical runtime budgets for host-based evaluation. Repeated executions 
-with identical seeds produced stable dissemination snapshots, while seed variation produced controlled 
-stochastic differences. Together, these findings support the claim that the framework offers deterministic 
-regression capability and controlled variability analysis within a single unified methodology.
+Scalability and repeatability tests provided additional evidence of robustness. Large-node broadcast workloads
+maintained the expected dissemination coverage, and higher-node stepping workloads stayed within practical
+runtime budgets for host-based evaluation. Repeating runs with identical seeds produced stable dissemination
+snapshots, while changing the seed produced controlled stochastic differences. Together, this supports the
+claim that the framework supports deterministic regression testing and controlled variability analysis within
+one methodology.
 
-The results should be interpreted within the model assumptions. Propagation behavior was represented 
-through analytic attenuation with configurable impairment terms rather than a fully site-calibrated 
-empirical urban channel model, and contention behavior was abstracted at event level rather than 
-modeled through complete physical-layer waveform interaction. Accordingly, the study provided strong 
-evidence of network-layer logical correctness, timing consistency, and resilience under modeled 
-conditions, while not claiming full physical-fidelity prediction for all deployment environments.
+The results should be interpreted within the model assumptions. Propagation was represented using analytic
+attenuation with configurable impairment terms rather than a fully site-calibrated empirical urban channel
+model. Also, contention was abstracted at the event level instead of modeling complete physical-layer waveform
+interaction. So, the study provides strong evidence of network-layer logical correctness, timing consistency,
+and resilience under modeled conditions, but it does not claim full physical-fidelity prediction for every
+deployment environment.
 
-Overall, the simulation campaign supplied coherent evidence of logical correctness, timing consistency, and 
-forwarding behavior under modeled nominal and adverse conditions. This section establishes a reproducible 
-baseline that is complemented by the real-world measurements reported in the next subsection.
+Overall, the simulation campaign gives coherent evidence of logical correctness, timing consistency, and
+forwarding behavior under modeled nominal and adverse conditions. It also establishes a reproducible baseline
+that is complemented by the real-world measurements in the next subsection.

@@ -22,16 +22,31 @@ hop-bounded propagation, and signal-quality-weighted relay timing, and a Link La
 providing channel-aware transmission through listen-before-send access control and 
 selective acknowledgment-based reliability.
 
-Validation is conducted through complementary methodologies: a deterministic host-side 
-simulation using virtual time progression and configurable channel impairments to verify 
-forwarding semantics under reproducible conditions, and real-world experiments with four 
-LoRa nodes demonstrating multi-hop routing, QoS-aware priority differentiation, directional 
-geographic propagation, and autonomous relay suppression. Experimental results confirm 
-end-to-end message delivery across nodes beyond direct transmission range, correct priority 
-ordering with an observed delay ratio consistent with the intended fourfold scaling, a 33\% 
-reduction in relay events under directional mode, and distributed best-relay selection without 
-explicit inter-node negotiation. These findings establish that a low-cost LoRa-based platform 
-can serve as a credible foundation for prototyping and studying decentralized vehicular 
+Vehicle-to-Vehicle (V2V) communication helps vehicles share safety information for
+cooperative driver assistance. However, common options such as DSRC and C-V2X often
+assume infrastructure support, which can be missing, limited, or too costly in
+resource-constrained deployment scenarios. In this work, we design and validate a fully
+decentralized LoRa-based V2V mesh system that can disseminate safety messages over
+multiple hops using only peer-to-peer forwarding and local decision-making, without
+roadside units, fixed gateways, or centralized coordination. We are not proposing LoRa as a
+replacement for purpose-built vehicular standards; instead, we use it as a low-cost and
+accessible experimental platform to study decentralized dissemination under constrained
+sub-GHz channel conditions. The system follows a three-layer architecture: an Application
+Layer for service-level logic, a Network Layer implementing managed flooding with
+duplicate suppression, hop-bounded propagation, and signal-quality-weighted relay timing,
+and a Link Layer providing channel-aware transmission through listen-before-send access
+control and selective acknowledgment-based reliability.
+
+We validate the design using two complementary methods: a deterministic host-side
+simulation with virtual time progression and configurable channel impairments to verify
+forwarding semantics under reproducible conditions, and real-world experiments with four
+LoRa nodes demonstrating multi-hop routing, QoS-aware priority differentiation,
+directional geographic propagation, and autonomous relay suppression. The results confirm
+end-to-end message delivery across nodes beyond direct transmission range, correct priority
+ordering with an observed delay ratio consistent with the intended fourfold scaling, a 33\%
+reduction in relay events under directional mode, and distributed best-relay selection
+without explicit inter-node negotiation. Overall, these findings show that a low-cost
+LoRa-based platform can support prototyping and studying decentralized vehicular
 networking principles in infrastructure-free environments.
 
 \vspace{0.8cm}

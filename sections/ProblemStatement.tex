@@ -2,15 +2,15 @@
 
 \subsection{Problem Definition}
 
-This work evaluates whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and
-efficient multi-hop safety-message dissemination for infrastructure-free operation.
+This work checks whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and efficient
+multi-hop safety-message dissemination when there is no supporting infrastructure.
 
-The problem is challenging because LoRa links impose strict communication constraints, including low data rate,
-long Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}.
-Without careful protocol control, these constraints can lead to excessive collisions, redundant rebroadcast,
-and unstable dissemination behavior in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}.
-Hence, the central problem is to design a decentralized protocol stack that preserves dissemination reach while
-keeping channel usage bounded and operational behavior predictable.
+This is difficult because LoRa links impose strict communication constraints, including low data rate, long
+Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}. If the
+protocol is not controlled carefully, these constraints can cause collisions, redundant rebroadcasts, and
+unstable dissemination in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}. So the
+central problem is designing a decentralized protocol stack that still reaches far enough, but keeps channel
+usage bounded and the behavior predictable.
 
 \subsection{Objectives and Goals}
 
@@ -29,10 +29,10 @@ The project objectives are:
 
 \subsection{Significance of the Problem}
 
-Solving this problem is significant at three levels. First, it provides a low-cost and reproducible platform
-for studying decentralized vehicular networking in a college project environment. Second, it contributes
-practical evidence on infrastructure-free dissemination behavior for scenarios where fixed communication
-support may be sparse or temporarily unavailable \cite{lora_mesh_emergency,lora_reliable_v2v_2025}. Third,
-it demonstrates an engineering pathway in which identical network-layer logic can be exercised in simulation
-and embedded deployment, improving confidence in protocol behavior before wider real-world scaling.
+Solving this problem matters for three reasons. First, it gives a low-cost and reproducible platform for
+studying decentralized vehicular networking in a college project environment. Second, it provides practical
+evidence of infrastructure-free dissemination behavior for scenarios where fixed communication support may be
+sparse or temporarily unavailable \cite{lora_mesh_emergency,lora_reliable_v2v_2025}. Third, it shows an
+engineering pathway where the same network-layer logic can be tested in simulation and then used in embedded
+deployment, which helps build confidence in the protocol behavior before scaling to larger real-world setups.
 

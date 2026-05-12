@@ -7,15 +7,14 @@
 \input{sections/architecture/LinkLayer.tex}
 
 \section{Techniques}
-Forwarding decisions are produced by an ordered evaluation pipeline that prioritizes safety and bounded
-propagation. Frames are first screened for temporal expiry, replay status, and residual hop budget, followed
-by checks on distance-constrained dissemination and directional eligibility when directional propagation is
-requested.
+Forwarding decisions follow an ordered evaluation pipeline so that safety and bounded propagation are handled
+first. We start by screening frames for temporal expiry, replay status, and the remaining hop budget. After
+that, we apply the checks for distance-constrained dissemination and (if enabled) directional eligibility.
 
-Medium access control follows a listen-before-send strategy based on channel activity detection. Prior to
-transmission, the transmitter assesses channel occupancy and defers when LoRa activity is detected, reducing
-collision probability under shared medium contention.
+Medium access control uses a listen-before-send strategy based on channel activity detection. Before
+transmitting, the node checks whether the channel seems busy and defers if LoRa activity is detected. This
+helps reduce collisions on a shared medium.
 
-This selective reliability model allows critical safety messages to request stronger delivery assurance while
-preserving lower overhead for noncritical traffic.
+We also use a selective reliability model. Critical safety messages can request stronger delivery assurance,
+while noncritical traffic keeps lower overhead.
 
