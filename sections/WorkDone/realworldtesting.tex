@@ -20,7 +20,7 @@ the packet at an RSSI of $-108$~dBm and an SNR of $-3$~dB, delivered it to its l
 decremented the hop count, and relayed it after its computed hold-back delay expired. Node D then received the
 relayed packet at an RSSI of $-113$~dBm and an SNR of $-5$~dB, confirmed local delivery, and the relay chain
 ended since no other eligible candidates were within range. End-to-end delivery finished in under one second,
-and the hop-count field was confirmed to decrement correctly at each hop. This verifies that the mesh routing
+and the hop-count field was confirmed to decrement correctly at each hop. So this shows that the mesh routing
 protocol can extend communication range beyond a single node's direct transmission range, without using
 pre-configured routing tables or infrastructure.
 
@@ -31,7 +31,7 @@ followed by an EMERGENCY priority message, separated by about 150~ms. Both were 
 Node C. From Node B's relay logs, the hold-back delay was about 320~ms for the LOW priority message and about
 75~ms for the EMERGENCY message. Delivery timestamps at Node C confirmed that the EMERGENCY message arrived
 before the LOW priority message even though it was transmitted later. The observed ratio of hold-back delays
-(approximately $4.3\times$) matches the intended fourfold priority scaling in the delay formula. This confirms
+(approximately $4.3\times$) matches the intended fourfold priority scaling in the delay formula. So this shows
 that the QoS classification carries across at least one relay hop and still works when different priority
 messages are queued at the same intermediate node.
 
@@ -62,7 +62,7 @@ and strongest signal) computed a delay of about 340~ms, but before its timer exp
 re-transmission of the same packet (matching originator identifier and sequence number) and canceled its own
 pending relay. So we got two relay transmissions from three candidates, which is a 33\% reduction in redundant
 channel occupancy for this configuration. The ordering we saw (farthest node first, closest node suppressed) is
-the intended emergent behavior from the signal-quality-weighted delay formula. This confirms distributed
+the intended emergent behavior from the signal-quality-weighted delay formula. So this shows distributed
 best-relay selection without any explicit inter-node negotiation.
 
 \subsection{Summary}

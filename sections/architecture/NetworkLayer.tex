@@ -69,7 +69,7 @@ Concurrency management is important for correctness. The network layer uses sepa
 receive-path processing and timer-driven relay emission, with mutex- and condition-variable-based
 synchronization around bounded shared queues and callback handoff state. Lifecycle control is made robust for
 repeated start-stop operation, with deterministic initialization, safe termination of background activity, and
-clean release of receive handlers during shutdown. Overall, this threading model keeps a clear separation
+clean release of receive handlers during shutdown. In practice, this threading model keeps a clear separation
 between ingress handling, routing computation, and deferred transmission timing.
 
 The architecture also exposes bounded configuration controls for duplicate-cache capacity, relay-queue

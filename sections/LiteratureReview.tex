@@ -16,12 +16,12 @@ communication.
 
 \section{The Paradigm of Centralized vs. Decentralized V2V}
 
-One thing that comes up a lot in V2X literature is that many practical architectures depend on infrastructure
+A lot of V2X work shows that many practical architectures depend on infrastructure
 like RSUs, gateways, or cellular coordination entities \cite{secure_iov,lorawan_v2roadside}. That is fine for
 planned deployments, but it does not directly answer a different question we care about here: how much
 cooperative safety dissemination is possible when vehicles rely only on peer-to-peer forwarding and local state.
 
-This matters when infrastructure is sparse, temporarily unavailable, or just outside a project-scale budget.
+This is relevant when infrastructure is sparse, temporarily unavailable, or just outside a project-scale budget.
 Studies on LoRa mesh and emergency communication show that infrastructure-free operation is feasible, but
 practical evidence of fully decentralized vehicular behavior (with realistic forwarding constraints) is still
 limited \cite{lora_mesh_emergency,lora_mesh_iot,routing_mesh_2020}.
@@ -36,7 +36,7 @@ centralized timing.
 
 At the network layer, prior work highlights two common problems in low-bandwidth vehicular meshes: too much
 control overhead from route-centric protocols in fast-changing topologies, and broadcast storms from
-unrestricted flooding \cite{routing_mesh_2020,vdtn_routing_eval}. Because of this, the literature generally
+unrestricted flooding \cite{routing_mesh_2020,vdtn_routing_eval}. So, the literature generally
 leans toward managed dissemination with controls like hop limits, duplicate suppression, and forwarding
 deferral. The goal is to reduce redundant rebroadcasts while still keeping the dissemination reach
 \cite{lora_reliable_v2v_2025,lora_mesh_emergency}.

@@ -7,7 +7,7 @@ from having different code paths for production vs testing.
 
 The evaluation covered both channel/transport-level effects and network-layer forwarding semantics. The
 simulation modeled virtual time progression, topology changes, and configurable channel impairments, while the
-forwarding pipeline at each node stayed unchanged. Because of that, the traces can be read as direct evidence
+forwarding pipeline at each node stayed unchanged. So the traces can be read as direct evidence
 of how duplicate handling, relay delay policy, and hop-limited dissemination behave in reproducible scenarios.
 We followed a staged approach: first basic delivery correctness, then forwarding-policy validation, and then
 determinism and scalability stress.
@@ -56,8 +56,8 @@ the same.
 Impairment and load experiments verified that packet-error and congestion mechanisms affected delivery in the
 expected directions. Strict error thresholds and forced congestion reduced successful receptions and increased
 drop-related counters, while light-load regimes below congestion thresholds preserved delivery continuity.
-This indicates the simulation can represent both nominal and stressed channel conditions in an interpretable
-way.
+So the simulation can represent both nominal and stressed channel conditions in a way that is easy to
+interpret.
 
 Most importantly, simulation-based validation of forwarding semantics confirmed correct behavior for
 lifetime-bounded dissemination, directional relay eligibility, multi-hop reach extension, and duplicate
@@ -70,9 +70,8 @@ duplicate application exposure.
 Scalability and repeatability tests provided additional evidence of robustness. Large-node broadcast workloads
 maintained the expected dissemination coverage, and higher-node stepping workloads stayed within practical
 runtime budgets for host-based evaluation. Repeating runs with identical seeds produced stable dissemination
-snapshots, while changing the seed produced controlled stochastic differences. Together, this supports the
-claim that the framework supports deterministic regression testing and controlled variability analysis within
-one methodology.
+snapshots, while changing the seed produced controlled stochastic differences. So we could use the framework
+for deterministic regression testing, and also for controlled variability analysis, within one methodology.
 
 The results should be interpreted within the model assumptions. Propagation was represented using analytic
 attenuation with configurable impairment terms rather than a fully site-calibrated empirical urban channel
@@ -81,6 +80,6 @@ interaction. So, the study provides strong evidence of network-layer logical cor
 and resilience under modeled conditions, but it does not claim full physical-fidelity prediction for every
 deployment environment.
 
-Overall, the simulation campaign gives coherent evidence of logical correctness, timing consistency, and
+So, the simulation campaign gives coherent evidence of logical correctness, timing consistency, and
 forwarding behavior under modeled nominal and adverse conditions. It also establishes a reproducible baseline
 that is complemented by the real-world measurements in the next subsection.

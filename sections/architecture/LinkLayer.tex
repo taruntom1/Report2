@@ -21,7 +21,7 @@ the transmitter checks for channel occupancy and defers when LoRa activity is de
 collision probability on a shared medium. If the channel is repeatedly busy, we apply bounded retry behavior
 with randomized backoff to reduce synchronization between concurrent transmitters. If the medium stays
 unavailable beyond the configured sensing budget, the pending transmission is discarded so latency does not
-grow without bound and the queues do not become unstable. Overall, we prefer predictable timing and spectrum
+grow without bound and the queues do not become unstable. In our design, we prefer predictable timing and spectrum
 discipline over aggressive persistence. The runtime state transitions are shown in
 Fig.~\ref{fig:link-layer-state-machine}.
 
@@ -68,7 +68,7 @@ intervals without missing important events.
 
 Hardware abstraction is done through a backend interface that separates protocol/state logic from the
 transceiver drivers. The link layer uses this interface for channel sensing, transmission, reception,
-signal-quality observation, interrupt signaling, and power-state transitions. Because of this, the same
+signal-quality observation, interrupt signaling, and power-state transitions. So the same
 link-layer behavior can run against real radio hardware or controlled test backends without changing the
 architecture. This improves portability, supports deterministic validation in the lab, and reduces coupling
 between communication policy and platform-specific implementation details.
