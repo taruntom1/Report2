@@ -1,6 +1,4 @@
-\section{Literature Review}
-
-\subsection{Introduction to LoRa in Vehicular Environments}
+\section{Introduction to LoRa in Vehicular Environments}
 
 Intelligent Transportation Systems (ITS) have been extensively developed around Dedicated Short-Range
 Communications (DSRC, IEEE 802.11p) and Cellular V2X (C-V2X), both of which are purpose-built for
@@ -16,7 +14,7 @@ and long Time-on-Air impose strict efficiency requirements on forwarding behavio
 Accordingly, relevant LoRa-V2V work emphasizes selective, low-overhead safety dissemination rather than
 high-throughput communication.
 
-\subsection{The Paradigm of Centralized vs. Decentralized V2V}
+\section{The Paradigm of Centralized vs. Decentralized V2V}
 
 A recurring theme in the V2X literature is the dependence of many practical architectures on supporting
 infrastructure such as RSUs, gateways, or cellular coordination entities \cite{secure_iov,lorawan_v2roadside}.
@@ -29,7 +27,7 @@ outside project-scale deployment budgets. Prior studies in LoRa mesh and emergen
 the feasibility of infrastructure-free operation, yet practical evidence for fully decentralized vehicular
 behavior under realistic forwarding constraints remains limited \cite{lora_mesh_emergency,lora_mesh_iot,routing_mesh_2020}.
 
-\subsection{Evaluating Existing Network and Link Layer Protocols}
+\section{Evaluating Existing Network and Link Layer Protocols}
 
 At the link layer, LoRa-focused literature consistently reports that channel access policy is decisive under
 broadcast-heavy traffic. Uncoordinated access can increase collision probability, while tightly scheduled
@@ -46,7 +44,7 @@ deferral to reduce redundant rebroadcast while preserving reach \cite{lora_relia
 These findings motivate the design direction used in this project: lightweight channel-aware transmission at
 the link layer and controlled flooding at the network layer, avoiding route-table dependence.
 
-\subsection{Research Gap and Proposed Architecture}
+\section{Research Gap and Proposed Architecture}
 
 Based on the reviewed work, the key gap targeted here is the limited end-to-end validation of a fully
 decentralized LoRa-based V2V mesh system that can operate without RSUs, fixed gateways, or centralized

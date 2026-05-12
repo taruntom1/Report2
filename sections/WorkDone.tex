@@ -1,8 +1,18 @@
-\section{Work Done and Results}
+\chapter{Results}
 
-% Detail the implementation and work performed
-% Discuss specific tasks, experiments, or developments
-% Include system architecture or design details as needed
-
+\section{Simulation}
 \input{sections/WorkDone/simulation}
+
+\section{Real-World Testing}
 \input{sections/WorkDone/realworldtesting}
+
+\section{Discussion}
+Overall, the simulation campaign supplied coherent evidence of logical correctness, timing consistency, and
+forwarding behavior under modeled nominal and adverse conditions. This section establishes a reproducible
+baseline that is complemented by the real-world measurements reported in this chapter.
+
+Across the evaluated subsystems, field tests confirmed four key behaviors: multi-hop delivery beyond direct
+range, priority-consistent forwarding delay, directional relay suppression, and distributed best-relay
+selection. No routing loops, duplicate final deliveries, or spurious relay activations were observed during
+the evaluation period. These results validate decentralized operation for the tested topology and radio
+settings, while broader generalization requires larger-scale mobility trials.

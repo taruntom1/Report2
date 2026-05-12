@@ -1,4 +1,6 @@
-\section{Introduction}
+\chapter{Introduction}
+
+\section{Overview}
 
 Vehicle-to-Vehicle (V2V) communication is a key enabler for cooperative safety functions such as collision
 warnings, hazard propagation, and context-aware driver assistance. DSRC (IEEE 802.11p) and cellular V2X
@@ -6,15 +8,56 @@ warnings, hazard propagation, and context-aware driver assistance. DSRC (IEEE 80
 This project investigates LoRa as a low-cost experimental platform for decentralized dissemination in
 infrastructure-constrained settings, not as a replacement for purpose-built vehicular standards.
 
+The proposed LoRa-based V2V mesh system uses a three-layer stack, with detailed responsibilities and design
+rationale presented in Chapter 3.
+
+This report documents the complete final-year project workflow from design rationale to implementation and
+validation. Results are presented through complementary simulation and real-node experiments, followed by a
+consolidated discussion of implications and limitations.
+
+\section{Motivation}
+
 The core question is whether a \textit{fully decentralized} vehicular mesh can provide useful multi-hop
 safety-message dissemination using only peer forwarding and local decision-making. This focus is relevant to
 academic prototyping and to scenarios where infrastructure support may be sparse, unavailable, or temporarily
 disrupted \cite{lora_mesh_emergency,lora_mesh_iot}.
 
-The proposed LoRa-based V2V mesh system uses a three-layer stack, with detailed responsibilities and design
-rationale presented in Section IV.
+\section{Problem Definition}
 
-This report documents the complete final-year project workflow from design rationale to implementation and
-validation. Results are presented through complementary simulation and real-node experiments, followed by a
-consolidated discussion of implications and limitations.
+This work evaluates whether a \textit{fully decentralized} LoRa-based V2V mesh can provide reliable and
+efficient multi-hop safety-message dissemination for infrastructure-free operation.
+
+The problem is challenging because LoRa links impose strict communication constraints, including low data rate,
+long Time-on-Air, duty-cycle limits, and shared-medium contention \cite{lora_mesh_iot,routing_mesh_2020}.
+Without careful protocol control, these constraints can lead to excessive collisions, redundant rebroadcast,
+and unstable dissemination behavior in dynamic vehicular topologies \cite{vdtn_routing_eval,lora_mesh_emergency}.
+Hence, the central problem is to design a decentralized protocol stack that preserves dissemination reach while
+keeping channel usage bounded and operational behavior predictable.
+
+\section{Objectives}
+
+The project objectives are:
+
+\begin{itemize}
+	\item Implement a three-layer architecture with clear separation between application logic, forwarding control,
+	and radio-facing transmission services.
+	\item Implement decentralized network-layer dissemination using managed flooding, duplicate suppression,
+	hop-bounded propagation, and policy-aware relay timing.
+	\item Implement link-layer channel-aware behavior, including sensing-driven transmission admission and
+	optional reliability signaling for critical traffic classes.
+	\item Demonstrate that the system can deliver safety messages across multiple hops with bounded redundancy,
+	without dependence on RSUs, fixed gateways, or centralized coordination.
+\end{itemize}
+
+\section{Contributions}
+
+Experimental results confirm end-to-end message delivery across nodes beyond direct transmission range, correct
+priority ordering with an observed delay ratio consistent with the intended fourfold scaling, a 33\% reduction
+in relay events under directional mode, and distributed best-relay selection without explicit inter-node
+negotiation.
+
+Simulation and real-node evaluations provided consistent evidence of intended system behavior. The simulation
+campaign verified forwarding correctness, bounded propagation policies, and timing consistency under modeled
+channel impairments. Four-node field testing demonstrated multi-hop reach extension, priority-aware relay
+ordering, directional propagation control, and autonomous suppression of redundant relays.
 

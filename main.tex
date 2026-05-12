@@ -1,47 +1,110 @@
-\documentclass[journal,10pt,twocolumn]{IEEEtran}
+\documentclass[12pt,a4paper]{report}
 
-% Packages
 \usepackage[utf8]{inputenc}
-\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{listings}
 \usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{ragged2e}
+\usepackage{longtable}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[ddmmyyyy]{datetime}
 \usepackage{cite}
 \usepackage{hyperref}
-\usepackage{float}
-\usepackage{booktabs}
-\usepackage{algorithm}
-\usepackage{algorithmic}
 
-\title{\vspace{-1cm}\textbf{Design of a LoRa-Based Vehicular Mesh Network for Cooperative Driver Assistance}}
-\author{
-6th Semester Project Report\\
-Department of Electronics and Communication Engineering\\[0.3cm]
-\textbf{Group No.: 34}\\[0.2cm]
-\begin{tabular}{c c}
-Sabith (B230088EC) & Tarun Tom (B230589EC)\\
-Vinayak Vinod (B231331EC) & Vishnu CS (B231334EC)
-\end{tabular}\\[0.3cm]
-\textit{Under the Guidance of}\\
-Dr. Raghu CV
+% Page margins
+\geometry{
+    left=1in,
+    right=1in,
+    top=1in,
+    bottom=1in
 }
-\date{February 2026\vspace{0.5cm}}
+
+% Figure caption formatting
+\captionsetup[figure]{
+    font=small,
+    labelfont=small
+}
+
+% Date format
+\renewcommand{\dateseparator}{/}
+
+% Prevent text overflow
+\setlength{\emergencystretch}{2em}
+
+% Chapter title formatting
+\titleformat{\chapter}[display]
+{\bfseries\filcenter}
+{\Large \MakeUppercase{\chaptername~\thechapter}}
+{1ex}
+{\Large}
 
 \begin{document}
 
-\maketitle
+% Justified text alignment
+\justifying
 
-% Include sections
+% Line spacing
+\begin{spacing}{1.3}
+
+% Font size
+\fontsize{12pt}{14pt}\selectfont
+
+% Remove page number from title page
+\pagenumbering{gobble}
+
+% Uppercase table of contents title
+\let\mtcontentsname\contentsname
+\renewcommand\contentsname{\MakeUppercase\mtcontentsname}
+
+% ---------------- TITLE PAGE ----------------
+\input{sections/TitlePage.tex}
+
+% ---------------- ACKNOWLEDGEMENT ----------------
+\clearpage
+\pagenumbering{roman}
+\input{sections/Acknowledgement.tex}
+
+% ---------------- DECLARATION ----------------
+\clearpage
+\input{sections/Declaration.tex}
+
+% ---------------- CERTIFICATE ----------------
+\clearpage
+\input{sections/Certificate.tex}
+
+% ---------------- ABSTRACT ----------------
+\clearpage
 \input{sections/Abstract.tex}
+
+% ---------------- TABLE OF CONTENTS ----------------
+\clearpage
+\tableofcontents
+
+% ---------------- MAIN CONTENT ----------------
+\clearpage
+\pagenumbering{arabic}
+
 \input{sections/Introduction.tex}
-\input{sections/LiteratureReview.tex}
-\input{sections/ProblemStatement.tex}
+\input{sections/Chapter2.tex}
 \input{sections/Methodology.tex}
 \input{sections/WorkDone.tex}
 \input{sections/Conclusion.tex}
 
-% References (BibTeX)
+% ---------------- REFERENCES ----------------
+\clearpage
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+
+\end{spacing}
 
 \end{document}

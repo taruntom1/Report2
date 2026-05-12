@@ -1,6 +1,21 @@
-\section{Methodology}
+\chapter{Design of a LoRa-Based Vehicular Mesh Network for Cooperative Driver Assistance}
 
 \input{sections/architecture/TopLevelOverview.tex}
+
 \input{sections/architecture/NetworkLayer.tex}
+
 \input{sections/architecture/LinkLayer.tex}
+
+\section{Techniques}
+Forwarding decisions are produced by an ordered evaluation pipeline that prioritizes safety and bounded
+propagation. Frames are first screened for temporal expiry, replay status, and residual hop budget, followed
+by checks on distance-constrained dissemination and directional eligibility when directional propagation is
+requested.
+
+Medium access control follows a listen-before-send strategy based on channel activity detection. Prior to
+transmission, the transmitter assesses channel occupancy and defers when LoRa activity is detected, reducing
+collision probability under shared medium contention.
+
+This selective reliability model allows critical safety messages to request stronger delivery assurance while
+preserving lower overhead for noncritical traffic.
 

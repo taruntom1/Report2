@@ -1,6 +1,4 @@
-\subsection{Real-World Testing}
-
-\subsubsection{Experimental Methodology}
+\subsection{Experimental Methodology}
 
 The system was evaluated through a controlled demonstration comprising both benchtop and short-range field 
 testing involving four LoRa nodes, designated Node A through Node D, each operating identical firmware as 
@@ -14,7 +12,7 @@ with a spreading factor of SF9, a bandwidth of 125~kHz, a coding rate of 4/5, an
 transmit power of +17~dBm, yielding a theoretical sensitivity floor of approximately $-137$~dBm and an 
 estimated line-of-sight range of 2~km per hop.
 
-\subsubsection{Multi-Hop Mesh Routing}
+\subsection{Multi-Hop Mesh Routing}
 
 To evaluate the multi-hop routing capability, Nodes A and D were separated beyond the single-hop communication 
 range achievable under the configured transmit power settings, such that no direct radio path existed between 
@@ -29,7 +27,7 @@ have decremented correctly at each intermediate stage. This result verified that
 successfully extended the effective communication range beyond any individual node's direct transmission 
 capability without recourse to pre-configured routing tables or infrastructure elements.
 
-\subsubsection{Priority-Based Delivery}
+\subsection{Priority-Based Delivery}
 
 QoS enforcement was assessed by injecting two messages at Node A in rapid succession, a LOW priority message 
 followed by an EMERGENCY priority message at an interval of approximately 150~ms, both routed through 
@@ -41,7 +39,7 @@ intended fourfold priority scaling encoded in the delay computation formula, con
 classification mechanism correctly propagated priority distinctions across at least one relay hop and 
 remained effective when messages from different priority tiers were simultaneously queued at an intermediate node.
 
-\subsubsection{Directional Propagation}
+\subsection{Directional Propagation}
 
 The geographic propagation control mechanism was evaluated 
 using a four-node configuration in which Nodes B and C were positioned within a 
@@ -59,7 +57,7 @@ events by 33\% for this topology, and the geographic filtering operated entirely
 node through independent Haversine-based bearing computation against coordinates embedded in the packet 
 header, requiring no centralized arbitration.
 
-\subsubsection{Intelligent Relay Timing}
+\subsection{Intelligent Relay Timing}
 
 The hold-back mechanism was evaluated by placing three relay candidates, Nodes B, C, and D, at distances 
 of approximately 200~m, 900~m, and 1.6~km from Node A, respectively. The corresponding received signal 
@@ -76,7 +74,7 @@ redundant channel occupancy for this configuration. The observed relay ordering,
 node suppressed, constitutes the intended emergent behavior of the signal-quality-weighted delay formula and 
 confirms that distributed best-relay selection was achieved without any explicit inter-node negotiation.
 
-\subsubsection{Summary}
+\subsection{Summary}
 
 Across the evaluated subsystems, field tests confirmed four key behaviors: multi-hop delivery beyond direct 
 range, priority-consistent forwarding delay, directional relay suppression, and distributed best-relay 
